@@ -1,3 +1,5 @@
+package com.company;
+
 public class Ride {
     private String source,destination;
     private User user;

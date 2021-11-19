@@ -1,3 +1,5 @@
+package com.company;
+
 public class CalculateAvgRating {
     public double CalcAvgRating(Driver d){
         double sum=0;
