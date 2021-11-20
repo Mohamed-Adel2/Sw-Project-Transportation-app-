@@ -5,6 +5,7 @@ public class Ride {
     private User user;
     private Double price;
     private Driver driver;
+    
     public Ride(String src,String dest){
         source=src;
         destination=dest;
