@@ -14,14 +14,14 @@ public class Login {
         }
         if (choice==1) {
             for (int i = 0; i < d.getUsers().size(); i++) {
-                if (d.getUsers().get(i).getUserName() == "name" && d.getUsers().get(i).getPassword() == pass) {
+                if (d.getUsers().get(i).getUserName() == name  && d.getUsers().get(i).getPassword() == pass) {
                     return true;
                 }
             }
         }
         else if(choice==2){
             for (int i = 0; i < d.getDrivers().size(); i++) {
-                if (d.getDrivers().get(i).getUserName() == "name" && d.getDrivers().get(i).getPassword() == pass) {
+                if (d.getDrivers().get(i).getUserName() == name  && d.getDrivers().get(i).getPassword() == pass) {
                     return true;
                 }
             }
