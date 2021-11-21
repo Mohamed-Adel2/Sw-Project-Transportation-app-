@@ -1,4 +1,4 @@
 public interface ILogin {
 
-    boolean login(NewUser user);
+    NewUser login(String username, String password);
 }

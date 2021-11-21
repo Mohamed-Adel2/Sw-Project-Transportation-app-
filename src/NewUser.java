@@ -1,14 +1,12 @@
 import java.util.ArrayList;
 
-abstract class NewUser implements IRegister, ILogin, INotifier {
+abstract class NewUser implements INotifier {
     private String username;
     private String email;
     private String phone;
     private String password;
     private ArrayList<String> notifications = new ArrayList<>();
     private boolean suspended;
-    private IRegister iRegister;
-    private ILogin iLogin;
     private INotifier notifier;
 
     public NewUser(String username, String email, String phone, String password) {
@@ -17,10 +15,6 @@ abstract class NewUser implements IRegister, ILogin, INotifier {
         this.phone = phone;
         this.password = password;
         this.suspended = false;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public void setEmail(String email) {
@@ -65,16 +59,6 @@ abstract class NewUser implements IRegister, ILogin, INotifier {
 
     public ArrayList<String> getNotifications() {
         return notifications;
-    }
-
-    @Override
-    public void register(NewUser user) {
-        iRegister.register(user);
-    }
-
-    @Override
-    public boolean login(NewUser user) {
-        return iLogin.login(user);
     }
 
     @Override

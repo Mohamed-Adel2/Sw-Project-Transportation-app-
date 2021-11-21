@@ -5,7 +5,7 @@ public class User extends NewUser {
 
     public User(String username, String email, String phone, String password) {
         super(username, email, phone, password);
-        register(this);
+
     }
 
     public void requestRide(String source, String destination) {
@@ -34,21 +34,6 @@ public class User extends NewUser {
             RidesData.removeRide(ride);
         else
             ride.setDriver(null);
-    }
-
-    public void register(User user) {
-        UsersData.addUser(user);
-    }
-
-    public boolean login(User user) {
-        ArrayList<User> users = UsersData.getUsers();
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUsername().equals(user.getUsername())
-                    && users.get(i).getPassword().equals(user.getPassword())) {
-                return !users.get(i).isSuspended();
-            }
-        }
-        return false;
     }
 
     public void notify(User user, String message, Ride ride) {

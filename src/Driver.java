@@ -13,15 +13,12 @@ public class Driver extends NewUser {
         super(username, email, phone, password);
         this.drivingLicence = drivingLicence;
         this.nationalID = nationalID;
-        register(this);
+        this.pending = true;
+
     }
 
     public void setDrivingLicence(String drivingLicence) {
         this.drivingLicence = drivingLicence;
-    }
-
-    public void setNationalID(String nationalID) {
-        this.nationalID = nationalID;
     }
 
     public void setPending(boolean pending) {
@@ -80,22 +77,6 @@ public class Driver extends NewUser {
         User user = ride.getUser();
         ride.setDriver(this);
         user.notify(user, "The driver offers your ride. check the price!", ride);
-    }
-
-    public void register(Driver driver) {
-        this.pending = true;
-        DriversData.addDriver(driver);
-    }
-
-    public boolean login(Driver driver) {
-        ArrayList<Driver> drivers = DriversData.getDrivers();
-        for (int i = 0; i < drivers.size(); i++) {
-            if (drivers.get(i).getUsername().equals(driver.getUsername())
-                    && drivers.get(i).getPassword().equals(driver.getPassword())) {
-                return !drivers.get(i).isSuspended() && !drivers.get(i).isPending();
-            }
-        }
-        return false;
     }
 
     public void notify(Driver driver, String message, Ride ride) {

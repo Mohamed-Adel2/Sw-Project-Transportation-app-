@@ -1,4 +1,4 @@
 public interface IRegister {
 
-    void register(NewUser user);
+    boolean register(NewUser user);
 }
