@@ -17,6 +17,9 @@ public class Driver extends NewUser {
 
     }
 
+    public Driver() {
+    }
+
     public void setDrivingLicence(String drivingLicence) {
         this.drivingLicence = drivingLicence;
     }
@@ -27,6 +30,7 @@ public class Driver extends NewUser {
 
     public void addUserRating(Rating rating) {
         ratings.add(rating);
+        System.out.println("Thanks for Rating me "+rating.getStars());
     }
 
     public void addFavoriteArea(String area) {
@@ -80,7 +84,6 @@ public class Driver extends NewUser {
     }
 
     public void notify(Driver driver, String message, Ride ride) {
-
         driver.addNotification(message);
     }
 }

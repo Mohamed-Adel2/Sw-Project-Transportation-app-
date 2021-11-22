@@ -8,6 +8,9 @@ public class Ride {
     private Driver driver;
     private Double price;
 
+    public Ride() {
+    }
+
     public Ride(String source, String destination, User user) {
         this.source = source;
         this.destination = destination;

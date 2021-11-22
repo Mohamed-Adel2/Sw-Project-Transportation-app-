@@ -17,6 +17,9 @@ abstract class NewUser implements INotifier {
         this.suspended = false;
     }
 
+    public NewUser() {
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }

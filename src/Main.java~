@@ -55,10 +55,10 @@ public class Main {
         String choice;
         Admin admin = new Admin();
 
-        RegisterDriver driver_R = new RegisterDriver();
+        IRegister driver_R = new RegisterDriver();
         LoginDriver driver_L = new LoginDriver();
 
-        RegisterUser user_R = new RegisterUser();
+        IRegister user_R = new RegisterUser();
         LoginUser user_L = new LoginUser();
         while(chk)
         {
