@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-<<<<<<< Updated upstream
-    <list default="true" id="334ad430-cd9d-44ea-bee9-e187d61407eb" name="Changes" comment="" />
-=======
     <list default="true" id="334ad430-cd9d-44ea-bee9-e187d61407eb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Ilogin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/Admin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/Driver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DriversData.java" beforeDir="false" afterPath="$PROJECT_DIR$/DriversData.java" afterDir="false" />
@@ -13,10 +9,7 @@
       <change beforePath="$PROJECT_DIR$/LoginDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/LoginDriver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LoginUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/LoginUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/NewUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/User.java" afterDir="false" />
     </list>
->>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,7 +19,6 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
-        <option value="Interface" />
       </list>
     </option>
   </component>
