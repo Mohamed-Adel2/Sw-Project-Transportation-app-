@@ -1,3 +1,5 @@
+
+
 import java.util.ArrayList;
 
 abstract class NewUser implements INotifier {
@@ -15,6 +17,9 @@ abstract class NewUser implements INotifier {
         this.phone = phone;
         this.password = password;
         this.suspended = false;
+    }
+
+    public NewUser() {
     }
 
     public void setEmail(String email) {

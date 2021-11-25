@@ -1,3 +1,5 @@
+
+
 import java.util.ArrayList;
 
 public class Ride {
@@ -7,6 +9,9 @@ public class Ride {
     private User user;
     private Driver driver;
     private Double price;
+
+    public Ride() {
+    }
 
     public Ride(String source, String destination, User user) {
         this.source = source;
@@ -21,6 +26,11 @@ public class Ride {
                 driver.notify(driver, "There is a ride that has a source area from your favorite areas!", this);
             }
         }
+    }
+    public Ride(Ride r){
+        this.source=r.source;
+        this.destination=r.destination;
+        this.user=r.user;
     }
 
     public void setSource(String source) {

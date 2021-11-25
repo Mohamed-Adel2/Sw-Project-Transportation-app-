@@ -1,3 +1,5 @@
+
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -17,6 +19,9 @@ public class Driver extends NewUser {
 
     }
 
+    public Driver() {
+    }
+
     public void setDrivingLicence(String drivingLicence) {
         this.drivingLicence = drivingLicence;
     }
@@ -27,6 +32,7 @@ public class Driver extends NewUser {
 
     public void addUserRating(Rating rating) {
         ratings.add(rating);
+        System.out.println("Thanks for Rating me "+rating.getStars());
     }
 
     public void addFavoriteArea(String area) {
@@ -73,14 +79,14 @@ public class Driver extends NewUser {
         Scanner sc = new Scanner(System.in);
         double price = sc.nextDouble();
         System.out.println("Your Offer Was Sent. Waiting for the reply from Client!");
-        ride.setPrice(price);
-        User user = ride.getUser();
-        ride.setDriver(this);
-        user.notify(user, "The driver offers your ride. check the price!", ride);
+        Ride r=new Ride(ride);
+        r.setPrice(price);
+        User user = r.getUser();
+        r.setDriver(this);
+        user.notify(user, "The driver offers your ride. check the price!", r);
     }
 
     public void notify(Driver driver, String message, Ride ride) {
-
         driver.addNotification(message);
     }
 }

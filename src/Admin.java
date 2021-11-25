@@ -1,9 +1,31 @@
+
 import java.util.ArrayList;
 
 public class Admin {
 
-    public void suspendUser(NewUser user) {
-        user.setSuspended(true);
+    private static Admin admin;
+    private Admin() {}
+
+    public static Admin getinstance(){
+        if(admin==null)admin=new Admin();
+        return admin;
+    }
+    public boolean suspendUser(String username) {
+        ArrayList<User> users = UsersData.getUsers();
+
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUsername().equals(username)) {
+                return true;
+            }
+        }
+        ArrayList<Driver> Drivers = DriversData.getDrivers();
+
+        for (int i = 0; i < Drivers.size(); i++) {
+            if (Drivers.get(i).getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void verifyDriver(Driver driver) {

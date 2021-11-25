@@ -1,4 +1,5 @@
-public interface ILogin {
 
-    NewUser login(String username, String password);
+
+public interface ILogin {
+    NewUser login(String username, String Password);
 }
