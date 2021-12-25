@@ -9,6 +9,7 @@ public class Ride {
     private User user;
     private Driver driver;
     private Double price;
+    private SystemData Data=DataArrays.getInstance();
 
     public Ride() {
     }
@@ -20,7 +21,7 @@ public class Ride {
         price = null;
         driver = null;
 
-        ArrayList<Driver> drivers = DriversData.getDrivers();
+        ArrayList<Driver> drivers =Data.getDrivers();
         for (Driver driver : drivers) {
             if (driver.getFavoriteAreas().contains(source)) {
                 driver.notify(driver, "There is a ride that has a source area from your favorite areas!", this);

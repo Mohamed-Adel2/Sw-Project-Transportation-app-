@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class Admin {
 
     private static Admin admin;
+    private SystemData Data=DataArrays.getInstance();
     private Admin() {}
 
     public static Admin getinstance(){
@@ -11,14 +12,14 @@ public class Admin {
         return admin;
     }
     public boolean suspendUser(String username) {
-        ArrayList<User> users = UsersData.getUsers();
+        ArrayList<User> users = Data.getUsers();
 
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getUsername().equals(username)) {
                 return true;
             }
         }
-        ArrayList<Driver> Drivers = DriversData.getDrivers();
+        ArrayList<Driver> Drivers = Data.getDrivers();
 
         for (int i = 0; i < Drivers.size(); i++) {
             if (Drivers.get(i).getUsername().equals(username)) {
@@ -33,7 +34,7 @@ public class Admin {
     }
 
     public ArrayList<Driver> listPendingDrivers() {
-        ArrayList<Driver> drivers = DriversData.getDrivers();
+        ArrayList<Driver> drivers = Data.getDrivers();
         ArrayList<Driver> pendingDrivers = new ArrayList<>();
 
         for (Driver driver : drivers)

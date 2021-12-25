@@ -5,11 +5,29 @@ import java.util.Scanner;
 
 public class User extends NewUser {
     private  ArrayList<Ride> getoffers = new ArrayList<>();
+    private SystemData Data=DataArrays.getInstance();
     public User(String username, String email, String phone, String password) {
         super(username, email, phone, password);
     }
 
     public User() {
+    }
+
+    public boolean register(NewUser user) {
+        if (Data.getUsernames().contains(user.getUsername()))
+            return false;
+        Data.addUser((User) user);
+        return true;
+    }
+
+    public NewUser login(String username,String password){
+        ArrayList<User> users = Data.getUsers();
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUsername().equals(username) && users.get(i).getPassword().equals(password) && !users.get(i).isSuspended()) {
+                return users.get(i);
+            }
+        }
+        return null;
     }
 
     public ArrayList<Ride> getGetoffers() {
@@ -18,7 +36,7 @@ public class User extends NewUser {
 
     public void requestRide(String source, String destination) {
         Ride my_ride = new Ride(source, destination, this);
-        RidesData.addRide(my_ride);
+        Data.addRide(my_ride);
     }
 
     public void rateDriver(Driver driver, int stars) {
@@ -56,7 +74,7 @@ public class User extends NewUser {
                 this.rateDriver(ride.getDriver(), Integer.parseInt(stars));
                 ride.setDriver(null);
                 ride.setPrice(null);
-                RidesData.removeRide(ride);
+                Data.removeRide(ride);
                 break;
             }
         }

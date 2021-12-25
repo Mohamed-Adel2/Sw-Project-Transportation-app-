@@ -2,7 +2,7 @@
 
 import java.util.ArrayList;
 
-abstract class NewUser implements INotifier {
+abstract class NewUser implements IRegister,INotifier,ILogin {
     private String username;
     private String email;
     private String phone;
@@ -10,6 +10,8 @@ abstract class NewUser implements INotifier {
     private ArrayList<String> notifications = new ArrayList<>();
     private boolean suspended;
     private INotifier notifier;
+    private ILogin login;
+    private IRegister register;
 
     public NewUser(String username, String email, String phone, String password) {
         this.username = username;
@@ -20,6 +22,13 @@ abstract class NewUser implements INotifier {
     }
 
     public NewUser() {
+    }
+
+    public NewUser login(String username, String Password){
+        return login.login(username,password);
+    }
+    public boolean register(NewUser user){
+        return register.register(user);
     }
 
     public void setEmail(String email) {

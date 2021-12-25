@@ -8,6 +8,7 @@ import java.util.Set;
 public class Driver extends NewUser {
     private String drivingLicence, nationalID;
     private boolean pending;
+    private SystemData Data=DataArrays.getInstance();
     private Set<String> favoriteAreas = new HashSet<>();
     private ArrayList<Rating> ratings = new ArrayList<>();
 
@@ -20,6 +21,24 @@ public class Driver extends NewUser {
     }
 
     public Driver() {
+    }
+
+    public boolean register(NewUser user) {
+        if (Data.getUsernames().contains(user.getUsername()))
+            return false;
+        Data.addDriver((Driver) user);
+        return true;
+    }
+
+    public NewUser login(String username, String password) {
+        ArrayList<Driver> drivers = Data.getDrivers();
+        for (int i = 0; i < drivers.size(); i++) {
+            if (drivers.get(i).getUsername().equals(username) && drivers.get(i).getPassword().equals(password)
+                    && !drivers.get(i).isSuspended() && !drivers.get(i).isPending()) {
+                return drivers.get(i);
+            }
+        }
+        return null;
     }
 
     public void setDrivingLicence(String drivingLicence) {
@@ -64,7 +83,7 @@ public class Driver extends NewUser {
     }
 
     public ArrayList<Ride> getRides() {
-        ArrayList<Ride> rides = RidesData.getRides();
+        ArrayList<Ride> rides = Data.getRides();
         ArrayList<Ride> favoriteAreaRides = new ArrayList<>();
 
         for (Ride ride : rides) {

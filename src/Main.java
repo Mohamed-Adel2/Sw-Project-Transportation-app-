@@ -1,3 +1,4 @@
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -51,22 +52,22 @@ public class Main {
     //-------------------------------------------------------------
 
     public static void main(String[] args) {
-//        NewUser u=new User("asd","123","123","123");
-//        NewUser d=new Driver("qwe","213","123","123","123","123");
-//        NewUser d1=new Driver("zxc","213","123","123","123","123");
-//        UsersData.addUser((User) u);
-//        DriversData.addDriver((Driver)d);
-//        DriversData.addDriver((Driver)d1);
-//        Admin a=Admin.getinstance();
-//        a.verifyDriver((Driver)d);
-//        a.verifyDriver((Driver) d1);
-//        ((Driver) d).addFavoriteArea("aaa");
-//        ((Driver) d1).addFavoriteArea("aaa");
-//        ((User) u).requestRide("aaa","bbb");
+        SystemData data=DataArrays.getInstance();
+        NewUser u=new User("asd","123","123","123");
+        NewUser d=new Driver("qwe","213","123","123","123","123");
+        NewUser d1=new Driver("zxc","213","123","123","123","123");
+        data.addUser((User) u);
+        data.addDriver((Driver)d);
+        data.addDriver((Driver)d1);
+        Admin a=Admin.getinstance();
+        a.verifyDriver((Driver)d);
+        a.verifyDriver((Driver) d1);
+        ((Driver) d).addFavoriteArea("aaa");
+        ((Driver) d1).addFavoriteArea("aaa");
+        ((User) u).requestRide("aaa","bbb");
 
         boolean chk=true;
         String choice;
-
 
         while(chk)
         {
@@ -82,7 +83,6 @@ public class Main {
                 // as User
                 if(Integer.parseInt(choice)==1)
                 {
-                    IRegister user_R = new RegisterUser();
                     boolean unique = true;
                     while(unique)
                     {
@@ -96,7 +96,7 @@ public class Main {
                         User new_user =new User(username,email,phone,password);
 
                         // Check for Username
-                        unique = (user_R.register(new_user));
+                        unique = (new_user.register(new_user));
                         if(unique)
                         {
                             System.out.println("Registeration Successfully");
@@ -114,7 +114,6 @@ public class Main {
                 // as Driver
                 else if(Integer.parseInt(choice)==2)
                 {
-                    IRegister driver_R = new RegisterDriver();
                     String licence, national_id;
                     boolean unique = true;
                     while(unique)
@@ -134,14 +133,16 @@ public class Main {
                         Driver new_driver =new Driver(username,email,phone,password,licence,national_id);
 
                         // Check for Username
-                        unique = !(driver_R.register(new_driver));
-                        if(!unique)
+                        unique = (new_driver.register(new_driver));
+                        if(unique)
                         {
                             System.out.println("Registeration Successfully");
+                            unique=false;
                         }
                         else
                         {
                             System.out.println("This Username is already used please Enter Another Username");
+                            unique=true;
                         }
                     }
                 }
@@ -169,8 +170,8 @@ public class Main {
                         // to login as User
                         username = Login_username(username);
                         password =Login_pass(password);
-                        ILogin user_L = new LoginUser();
-                        My_account =(User) user_L.login(username,password);
+                        My_account = new User();
+                        My_account=(User)My_account.login(username,password);
 
                         // check out Username and Password
                         if(My_account==null)
@@ -232,13 +233,12 @@ public class Main {
                 {
                     boolean correct=true;
                     Driver My_account = new Driver();
-                    ILogin driver_L = new LoginDriver();
                     while(correct)
                     {
                         // to login as Driver
                         username = Login_username(username);
                         password =Login_pass(password);
-                        My_account =(Driver) driver_L.login(username,password);
+                        My_account =(Driver)My_account.login(username,password);
 
                         // check out Username and Password
                         if(My_account==null)
@@ -366,7 +366,7 @@ public class Main {
                         }
                         else if(Integer.parseInt(choice)==3)
                         {
-                            ArrayList<User> users = UsersData.getUsers();
+                            ArrayList<User> users = data.getUsers();
                             System.out.println("All Usernames and Suspend Status of Users in application ");
                             for(User user:users)
                             {
@@ -377,7 +377,7 @@ public class Main {
                         }
                         else if(Integer.parseInt(choice)==4)
                         {
-                            ArrayList<Driver> drivers = DriversData.getDrivers();
+                            ArrayList<Driver> drivers = data.getDrivers();
                             System.out.println("All Usernames and Suspend Status and verification status of Drivers in application");
                             for(Driver driver:drivers)
                             {
