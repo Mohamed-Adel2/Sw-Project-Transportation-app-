@@ -9,6 +9,11 @@ public class DataArrays implements SystemData{
     private static Set<String> systemUsersname = new HashSet<>();
     private static ArrayList<Ride> rides = new ArrayList<>();
     private static DataArrays Data;
+    private static ArrayList<String> Discount_area =new ArrayList<>();
+
+    public void addDiscount_area(String area) {
+        Discount_area.add(area);
+    }
 
     private DataArrays(){}
 

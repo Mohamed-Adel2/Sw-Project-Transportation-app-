@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class User extends NewUser {
-    private  ArrayList<Ride> getoffers = new ArrayList<Ride>();
+    private  Ride getoffers = new Ride();
     private ArrayList<Ride> ridesHistory=new ArrayList<Ride>();
     private SystemData Data=DataArrays.getInstance();
     public User(String username, String email, String phone, String password) {
@@ -31,12 +31,12 @@ public class User extends NewUser {
         return null;
     }
 
-    public ArrayList<Ride> getGetoffers() {
+    public Ride getGetoffers() {
         return getoffers;
     }
 
-    public void requestRide(String source, String destination) {
-        Ride my_ride = new Ride(source, destination, this);
+    public void requestRide(String source, String destination, int passenger) {
+        Ride my_ride = new Ride(source, destination, this,passenger);
         Data.addRide(my_ride);
     }
 
@@ -52,33 +52,27 @@ public class User extends NewUser {
         return driver.getAvgRating();
     }
 
-    public String chkOffer(Ride ride){
-        return ("The driver: " + ride.getDriver().getUsername() + " Offers Your Ride with: " + ride.getPrice() + " LE.");
+    public String chkOffer(Offer offer){
+        return ("The driver: " + offer.getDriver().getUsername() + " Offers Your Ride with: " + offer.getPrice() + " LE.");
     }
 
-    public void acceptOffer(Ride ride,Boolean accept){
-        ride.getDriver().notify(ride.getDriver(), "User " + (accept ? "accepted" : "rejected") + " the offer", ride);
+    public void acceptOffer(Ride ride,Boolean accept,Offer offer){
+        offer.getDriver().notify(offer.getDriver(), "User " + (accept ? "accepted" : "rejected") + " the offer", ride);
         if(accept) {
             ridesHistory.add(ride);
-            for(Ride r:Data.getRides()){
-                System.out.println(r.getDriver());
-            }
-            ride.setDriver(null);
-            ride.setPrice(null);
-            for(Ride r:Data.getRides()){
-                System.out.println(r.getDriver());
-            }
+            ride.setDriver(offer.getDriver());
+            ride.setPrice(offer.getPrice());
             Data.removeRide(ride);
         }
     }
 
     public void clearOffers(){
-        getoffers.clear();
+        getoffers = null;
     }
 
     public void notify(User user, String message, Ride ride) {
         user.addNotification(message);
-        user.getoffers.add(ride);
+        getoffers =ride;
     }
 
     /*public void acceptOffer() {

@@ -65,7 +65,7 @@ public class Main {
         a.verifyDriver((Driver) d1);
         ((Driver) d).addFavoriteArea("aaa");
         ((Driver) d1).addFavoriteArea("aaa");
-        ((User) u).requestRide("aaa","bbb");
+        ((User) u).requestRide("aaa","bbb",3);
 
         boolean chk=true;
         String choice;
@@ -204,14 +204,16 @@ public class Main {
                         // request ride
                         if(Integer.parseInt(choice)==1)
                         {
-                            String src,des;
+                            String src,des,pass;
                             System.out.print("Enter The name of source area: ");
                             src = sc.nextLine();
                             System.out.print("Enter The name of destination area: ");
                             des = sc.nextLine();
+                            System.out.print("Enter The number of passenger: ");
+                            pass = sc.nextLine();
 
                             // request ride and notify all drivers
-                            My_account.requestRide(src,des);
+                            My_account.requestRide(src,des,Integer.parseInt(pass));
                         }
                         // print notifications
                         else if(Integer.parseInt(choice)==2)
@@ -221,26 +223,26 @@ public class Main {
                         // get offers of my rides and rate driver if user accept the offer check average user rating for the driver
                         else if(Integer.parseInt(choice)==3)
                         {
-                            List<Ride> offers=My_account.getGetoffers();
+                            Ride offers=My_account.getGetoffers();
                             Scanner sc = new Scanner(System.in);
-                            for(int i=0;i<offers.size();i++){
+                            for(int i=0;i<offers.getOffers().size();i++){
                                 System.out.print("Enter 1 if you need check for average user rating of driver or 0 if you do not need: ");
                                 String x = sc.nextLine();
                                 if(Integer.parseInt(x)==1)
                                 {
-                                    System.out.println("The average Rating of driver = "+My_account.checkDriverRating(offers.get(i).getDriver()));
+                                    System.out.println("The average Rating of driver = "+My_account.checkDriverRating(offers.getOffers().get(i).getDriver()));
                                 }
-                                System.out.println(My_account.chkOffer(offers.get(i)));
+                                System.out.println(My_account.chkOffer(offers.getOffers().get(i)));
                                 System.out.println("do you want to accept? Yes/No");
                                 String s = sc.nextLine();
                                 boolean accept=(s.equalsIgnoreCase("yes"));
-                                My_account.acceptOffer(offers.get(i),accept);
+                                My_account.acceptOffer(offers,accept,offers.getOffers().get(i));
                                 if(accept==true)
                                 {
                                     System.out.println("Enter Your Rate for Dirver between 1 and 5 : ");
                                     s=sc.nextLine();
                                     int rate=Integer.parseInt(s);
-                                    My_account.rateDriver(offers.get(i).getDriver(),rate);
+                                    My_account.rateDriver(offers.getOffers().get(i).getDriver(),rate);
                                     break;
                                 }
                             }
@@ -311,9 +313,14 @@ public class Main {
                                 ch=sc.nextLine();
                                 if(ch.equalsIgnoreCase("yes"))
                                 {
+                                    System.out.print("Enter Your Offer for Ride From: " + ride.getSource() + " to: " + ride.getDestination() + " :");
+                                    Scanner sc = new Scanner(System.in);
+                                    double price = sc.nextDouble();
+
+                                    System.out.println("Your Offer Was Sent. Waiting for the reply from Client!");
                                     My_ride=ride;
                                     // make offer and notify user
-                                    My_account.makeOffer(My_ride);
+                                    My_account.makeOffer(My_ride,price);
                                 }
                             }
                             if(rides.size()==0)

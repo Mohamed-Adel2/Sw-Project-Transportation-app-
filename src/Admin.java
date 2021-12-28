@@ -11,6 +11,7 @@ public class Admin {
         if(admin==null)admin=new Admin();
         return admin;
     }
+
     public boolean suspendUser(String username) {
         ArrayList<User> users = Data.getUsers();
 
@@ -41,5 +42,10 @@ public class Admin {
             if (driver.isPending())
                 pendingDrivers.add(driver);
         return pendingDrivers;
+    }
+
+    public void addDiscountArea(String area)
+    {
+        Data.addDiscount_area(area);
     }
 }
