@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class User extends NewUser {
-    private  ArrayList<Ride> getoffers = new ArrayList<>();
+    private  ArrayList<Ride> getoffers = new ArrayList<Ride>();
+    private ArrayList<Ride> ridesHistory=new ArrayList<Ride>();
     private SystemData Data=DataArrays.getInstance();
     public User(String username, String email, String phone, String password) {
         super(username, email, phone, password);
@@ -47,7 +48,40 @@ public class User extends NewUser {
         return driver.getAvgRating();
     }
 
-    public void acceptOffer() {
+    public double chkAvgRating(Driver driver){
+        return driver.getAvgRating();
+    }
+
+    public String chkOffer(Ride ride){
+        return ("The driver: " + ride.getDriver().getUsername() + " Offers Your Ride with: " + ride.getPrice() + " LE.");
+    }
+
+    public void acceptOffer(Ride ride,Boolean accept){
+        ride.getDriver().notify(ride.getDriver(), "User " + (accept ? "accepted" : "rejected") + " the offer", ride);
+        if(accept) {
+            ridesHistory.add(ride);
+            for(Ride r:Data.getRides()){
+                System.out.println(r.getDriver());
+            }
+            ride.setDriver(null);
+            ride.setPrice(null);
+            for(Ride r:Data.getRides()){
+                System.out.println(r.getDriver());
+            }
+            Data.removeRide(ride);
+        }
+    }
+
+    public void clearOffers(){
+        getoffers.clear();
+    }
+
+    public void notify(User user, String message, Ride ride) {
+        user.addNotification(message);
+        user.getoffers.add(ride);
+    }
+
+    /*public void acceptOffer() {
         for(Ride ride: getoffers)
         {
             Scanner sc = new Scanner(System.in);
@@ -79,10 +113,5 @@ public class User extends NewUser {
             }
         }
         getoffers.clear();
-    }
-
-    public void notify(User user, String message, Ride ride) {
-        user.addNotification(message);
-        user.getoffers.add(ride);
-    }
+    }*/
 }

@@ -1,5 +1,6 @@
 import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -220,7 +221,30 @@ public class Main {
                         // get offers of my rides and rate driver if user accept the offer check average user rating for the driver
                         else if(Integer.parseInt(choice)==3)
                         {
-                            My_account.acceptOffer();
+                            List<Ride> offers=My_account.getGetoffers();
+                            Scanner sc = new Scanner(System.in);
+                            for(int i=0;i<offers.size();i++){
+                                System.out.print("Enter 1 if you need check for average user rating of driver or 0 if you do not need: ");
+                                String x = sc.nextLine();
+                                if(Integer.parseInt(x)==1)
+                                {
+                                    System.out.println("The average Rating of driver = "+My_account.checkDriverRating(offers.get(i).getDriver()));
+                                }
+                                System.out.println(My_account.chkOffer(offers.get(i)));
+                                System.out.println("do you want to accept? Yes/No");
+                                String s = sc.nextLine();
+                                boolean accept=(s.equalsIgnoreCase("yes"));
+                                My_account.acceptOffer(offers.get(i),accept);
+                                if(accept==true)
+                                {
+                                    System.out.println("Enter Your Rate for Dirver between 1 and 5 : ");
+                                    s=sc.nextLine();
+                                    int rate=Integer.parseInt(s);
+                                    My_account.rateDriver(offers.get(i).getDriver(),rate);
+                                    break;
+                                }
+                            }
+                            My_account.clearOffers();
                         }
                         else
                         {

@@ -51,7 +51,6 @@ public class DataArrays implements SystemData{
                 rides.remove(r);
                 break;
             }
-
         }
     }
 
