@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
-//
+
 public class Driver extends NewUser {
     private String drivingLicence, nationalID;
     private boolean pending;
-    private String Current_location;
-    private boolean available;
     private SystemData Data=DataArrays.getInstance();
     private Set<String> favoriteAreas = new HashSet<>();
     private ArrayList<Rating> ratings = new ArrayList<>();
@@ -19,8 +17,6 @@ public class Driver extends NewUser {
         this.drivingLicence = drivingLicence;
         this.nationalID = nationalID;
         this.pending = true;
-        available =true;
-        Current_location = "main_area";
     }
 
     public Driver() {
@@ -31,14 +27,6 @@ public class Driver extends NewUser {
             return false;
         Data.addDriver((Driver) user);
         return true;
-    }
-
-    public String getCurrent_location() {
-        return Current_location;
-    }
-
-    public boolean isAvailable() {
-        return available;
     }
 
     public NewUser login(String username, String password) {
@@ -108,25 +96,6 @@ public class Driver extends NewUser {
         User user = ride.getUser();
         ride.add_Offer(new Offer(this,price));
         user.notify(user, "The driver offers your ride. check the price!", ride);
-    }
-
-    public void setCurrent_location(String current_location) {
-        Current_location = current_location;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
-    public void finish_Ride(Ride ride)
-    {
-        Current_location = ride.getDestination();
-        available = true;
-    }
-
-    public void start_Ride()
-    {
-        available=false;
     }
 
     public void notify(Driver driver, String message, Ride ride) {

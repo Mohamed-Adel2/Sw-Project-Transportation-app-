@@ -44,8 +44,4 @@ public class Admin {
         return pendingDrivers;
     }
 
-    public void addDiscountArea(String area)
-    {
-        Data.addDiscount_area(area);
-    }
 }

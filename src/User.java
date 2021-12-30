@@ -74,38 +74,4 @@ public class User extends NewUser {
         user.addNotification(message);
         getoffers =ride;
     }
-
-    /*public void acceptOffer() {
-        for(Ride ride: getoffers)
-        {
-            Scanner sc = new Scanner(System.in);
-            //check average rating
-            System.out.print("Enter 1 if you need check for average user rating of driver or 0 if you do not need: ");
-            String x = sc.nextLine();
-            if(Integer.parseInt(x)==1)
-            {
-                System.out.println("The average Rating of driver = "+ride.getUser().checkDriverRating(ride.getDriver()));
-            }
-            System.out.println("The driver: " + ride.getDriver().getUsername() + " Offers Your Ride with: " + ride.getPrice() + " LE. do you want to accept? Yes/No");
-            String s = sc.nextLine();
-            while (!(s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("no"))) {
-                System.out.println("Wrong Choice! Please Enter Yes Or No");
-                s = sc.nextLine();
-            }
-            boolean accept = s.equalsIgnoreCase("yes");
-            ride.getDriver().notify(ride.getDriver(), "User " + (accept ? "accepted" : "rejected") + " the offer", ride);
-            if(accept) {
-                // rate driver and add this in rating list
-                String stars;
-                System.out.print("Enter stars for the driver: ");
-                stars = sc.nextLine();
-                this.rateDriver(ride.getDriver(), Integer.parseInt(stars));
-                ride.setDriver(null);
-                ride.setPrice(null);
-                Data.removeRide(ride);
-                break;
-            }
-        }
-        getoffers.clear();
-    }*/
 }

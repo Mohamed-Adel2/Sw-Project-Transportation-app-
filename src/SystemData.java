@@ -10,5 +10,4 @@ public interface SystemData {
     void addRide(Ride ride);
     void removeRide(Ride ride);
     ArrayList<Ride> getRides();
-    void addDiscount_area(String area);
 }

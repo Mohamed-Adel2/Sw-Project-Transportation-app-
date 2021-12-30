@@ -9,7 +9,6 @@ public class Ride {
     private User user;
     private Driver driver;
     private Double price;
-    private int num_passenger;
     private SystemData Data=DataArrays.getInstance();
     private ArrayList<Offer> offers = new ArrayList<>();
 
@@ -30,22 +29,14 @@ public class Ride {
         this.user = user;
         price = null;
         driver = null;
-        num_passenger = passenger;
 
         ArrayList<Driver> drivers =Data.getDrivers();
         for (Driver driver : drivers) {
-            if (driver.getFavoriteAreas().contains(source) && (driver.getCurrent_location().equalsIgnoreCase(source) || driver.getCurrent_location().equalsIgnoreCase("main_area")) && driver.isAvailable()) {
+            if (driver.getFavoriteAreas().contains(source)) {
                 driver.notify(driver, "There is a ride that has a source area from your favorite areas!", this);
             }
         }
     }
-//    public Ride(Ride r){
-//        this.source=r.source;
-//        this.destination=r.destination;
-//        this.user=r.user;
-//        this.num_passenger =r.num_passenger;
-//        this.offers =r.offers;
-//    }
 
     public void setSource(String source) {
         this.source = source;
