@@ -1,5 +1,3 @@
-
-
 public class CalculateAvgRating {
 
     public static double calcAvgRating(Driver driver) {

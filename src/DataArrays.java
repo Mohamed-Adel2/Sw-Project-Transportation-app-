@@ -2,59 +2,73 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DataArrays implements SystemData{
+public class DataArrays implements SystemData {
 
-    private static ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<Passenger> passengers = new ArrayList<>();
     private static ArrayList<Driver> drivers = new ArrayList<>();
-    private static Set<String> systemUsersname = new HashSet<>();
+    private static Set<String> systemUsernames = new HashSet<>();
     private static ArrayList<Ride> rides = new ArrayList<>();
-    private static DataArrays Data;
+    private static ArrayList<String> discountAreas = new ArrayList<>();
+    private static DataArrays data;
 
-    private DataArrays(){}
-
-    public static DataArrays getInstance(){
-        if(Data==null)Data=new DataArrays();
-        return Data;
+    private DataArrays() {
     }
 
-    public void addUser(User user) {
-        users.add(user);
-        systemUsersname.add(user.getUsername());
+    public static DataArrays getInstance() {
+        if (data == null)
+            data = new DataArrays();
+        return data;
     }
 
-    public ArrayList<User> getUsers() {
-        return users;
+    @Override
+    public void addPassenger(Passenger passenger) {
+        passengers.add(passenger);
+        systemUsernames.add(passenger.getUsername());
     }
 
-    public Set<String> getUsernames() {
-        return systemUsersname;
+    @Override
+    public ArrayList<Passenger> getPassengers() {
+        return passengers;
     }
 
     @Override
     public void addDriver(Driver driver) {
         drivers.add(driver);
-        systemUsersname.add(driver.getUsername());
+        systemUsernames.add(driver.getUsername());
     }
 
+    @Override
     public ArrayList<Driver> getDrivers() {
         return drivers;
     }
 
+    @Override
+    public Set<String> getUsernames() {
+        return systemUsernames;
+    }
+
+    @Override
     public void addRide(Ride ride) {
         rides.add(ride);
     }
 
+    @Override
     public void removeRide(Ride ride) {
-        for(Ride r : rides){
-            if((r.getDestination().equalsIgnoreCase(ride.getDestination()))&&(r.getSource().equalsIgnoreCase(ride.getSource()))&&(r.getUser()==ride.getUser()))
-            {
-                rides.remove(r);
-                break;
-            }
-        }
+        rides.remove(ride);
     }
 
+    @Override
     public ArrayList<Ride> getRides() {
         return rides;
+    }
+
+    @Override
+    public void addDiscountArea(String area) {
+        discountAreas.add(area);
+    }
+
+    @Override
+    public ArrayList<String> getDiscountAreas() {
+        return discountAreas;
     }
 }

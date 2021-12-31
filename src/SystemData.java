@@ -2,12 +2,14 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public interface SystemData {
-    void addUser(User user);
-    ArrayList<User> getUsers();
-    Set<String> getUsernames();
+    void addPassenger(Passenger passenger);
+    ArrayList<Passenger> getPassengers();
     void addDriver(Driver driver);
     ArrayList<Driver> getDrivers();
+    Set<String> getUsernames();
     void addRide(Ride ride);
-    void removeRide(Ride ride);
     ArrayList<Ride> getRides();
+    void removeRide(Ride ride);
+    void addDiscountArea(String area);
+    ArrayList<String> getDiscountAreas();
 }

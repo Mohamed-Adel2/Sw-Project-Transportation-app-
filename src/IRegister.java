@@ -1,3 +1,3 @@
 public interface IRegister {
-    boolean register(NewUser user);
+    boolean register(User user);
 }
