@@ -2,16 +2,13 @@
 
 import java.util.ArrayList;
 
-abstract class NewUser implements IRegister,INotifier,ILogin {
+public abstract class NewUser implements IServices {
     private String username;
     private String email;
     private String phone;
     private String password;
     private ArrayList<String> notifications = new ArrayList<>();
     private boolean suspended;
-    private INotifier notifier;
-    private ILogin login;
-    private IRegister register;
 
     public NewUser(String username, String email, String phone, String password) {
         this.username = username;
@@ -24,12 +21,9 @@ abstract class NewUser implements IRegister,INotifier,ILogin {
     public NewUser() {
     }
 
-    public NewUser login(String username, String Password){
-        return login.login(username,password);
-    }
-    public boolean register(NewUser user){
-        return register.register(user);
-    }
+    public abstract NewUser login(String username, String Password);
+    public abstract boolean register(NewUser user);
+    public abstract void notify(String message, Ride ride);
 
     public void setEmail(String email) {
         this.email = email;
@@ -73,10 +67,5 @@ abstract class NewUser implements IRegister,INotifier,ILogin {
 
     public ArrayList<String> getNotifications() {
         return notifications;
-    }
-
-    @Override
-    public void notify(NewUser user, String message, Ride ride) {
-        notifier.notify(user, message, ride);
     }
 }

@@ -50,7 +50,6 @@ public class Driver extends NewUser {
 
     public void addUserRating(Rating rating) {
         ratings.add(rating);
-        System.out.println("Thanks for Rating me "+rating.getStars());
     }
 
     public void addFavoriteArea(String area) {
@@ -95,10 +94,10 @@ public class Driver extends NewUser {
     public void makeOffer(Ride ride, double price) {
         User user = ride.getUser();
         ride.add_Offer(new Offer(this,price));
-        user.notify(user, "The driver offers your ride. check the price!", ride);
+        user.notify( "The driver offers your ride. check the price!", ride);
     }
 
-    public void notify(Driver driver, String message, Ride ride) {
-        driver.addNotification(message);
+    public void notify( String message, Ride ride) {
+        this.addNotification(message);
     }
 }

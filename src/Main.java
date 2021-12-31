@@ -1,6 +1,4 @@
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 
@@ -65,7 +63,7 @@ public class Main {
         a.verifyDriver((Driver) d1);
         ((Driver) d).addFavoriteArea("aaa");
         ((Driver) d1).addFavoriteArea("aaa");
-        ((User) u).requestRide("aaa","bbb",3);
+        ((User) u).requestRide("aaa","bbb");
 
         boolean chk=true;
         String choice;
@@ -209,11 +207,9 @@ public class Main {
                             src = sc.nextLine();
                             System.out.print("Enter The name of destination area: ");
                             des = sc.nextLine();
-                            System.out.print("Enter The number of passenger: ");
-                            pass = sc.nextLine();
 
                             // request ride and notify all drivers
-                            My_account.requestRide(src,des,Integer.parseInt(pass));
+                            My_account.requestRide(src,des);
                         }
                         // print notifications
                         else if(Integer.parseInt(choice)==2)
@@ -223,7 +219,7 @@ public class Main {
                         // get offers of my rides and rate driver if user accept the offer check average user rating for the driver
                         else if(Integer.parseInt(choice)==3)
                         {
-                            Ride offers=My_account.getGetoffers();
+                            Ride offers=My_account.getOffers();
                             Scanner sc = new Scanner(System.in);
                             for(int i=0;i<offers.getOffers().size();i++){
                                 System.out.print("Enter 1 if you need check for average user rating of driver or 0 if you do not need: ");
@@ -264,6 +260,7 @@ public class Main {
                         // to login as Driver
                         username = Login_username(username);
                         password =Login_pass(password);
+                        My_account = new Driver();
                         My_account =(Driver)My_account.login(username,password);
 
                         // check out Username and Password

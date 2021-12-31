@@ -23,7 +23,7 @@ public class Ride {
         offers.add(o);
     }
 
-    public Ride(String source, String destination, User user, int passenger) {
+    public Ride(String source, String destination, User user) {
         this.source = source;
         this.destination = destination;
         this.user = user;
@@ -33,7 +33,7 @@ public class Ride {
         ArrayList<Driver> drivers =Data.getDrivers();
         for (Driver driver : drivers) {
             if (driver.getFavoriteAreas().contains(source)) {
-                driver.notify(driver, "There is a ride that has a source area from your favorite areas!", this);
+                driver.notify( "There is a ride that has a source area from your favorite areas!", this);
             }
         }
     }

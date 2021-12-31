@@ -16,14 +16,16 @@ public class Admin {
         ArrayList<User> users = Data.getUsers();
 
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUsername().equals(username)) {
+            if (users.get(i).getUsername().equalsIgnoreCase(username)) {
+                Data.getUsers().get(i).setSuspended(true);
                 return true;
             }
         }
         ArrayList<Driver> Drivers = Data.getDrivers();
 
         for (int i = 0; i < Drivers.size(); i++) {
-            if (Drivers.get(i).getUsername().equals(username)) {
+            if (Drivers.get(i).getUsername().equalsIgnoreCase(username)) {
+                Data.getDrivers().get(i).setSuspended(true);
                 return true;
             }
         }
