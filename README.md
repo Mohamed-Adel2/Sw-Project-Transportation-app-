@@ -1,2 +1,0 @@
-# Sw-Project
-SoftWare Project
