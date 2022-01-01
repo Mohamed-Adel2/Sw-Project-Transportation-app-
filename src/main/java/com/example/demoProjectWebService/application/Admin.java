@@ -1,7 +1,7 @@
 package com.example.demoProjectWebService.application;
 import java.util.ArrayList;
 
-public class Admin {
+public class Admin implements EventListener{
 
     private static Admin admin;
     private SystemData Data=DataArrays.getInstance();
@@ -13,11 +13,11 @@ public class Admin {
     }
 
     public boolean suspendUser(String username) {
-        ArrayList<User> users = ((DataArrays)Data).getUsers();
+        ArrayList<Passenger> users = ((DataArrays)Data).getPassengers();
 
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getUsername().equalsIgnoreCase(username)) {
-                ((DataArrays)Data).getUsers().get(i).setSuspended(true);
+                ((DataArrays)Data).getPassengers().get(i).setSuspended(true);
                 return true;
             }
         }
@@ -52,4 +52,21 @@ public class Admin {
         return pendingDrivers;
     }
 
+    public void addDiscountArea(String area) {
+        Data.addDiscountArea(area);
+    }
+
+    public ArrayList<String> showRideEvents(int Rideid) {
+        ArrayList<String> events=new ArrayList<String>();
+        ArrayList<Event> tmp=((DataArrays)Data).getRides().get(Rideid).getEvents();
+        for(int i=0;i<tmp.size();i++){
+            events.add(tmp.get(i).toString());
+        }
+        return events;
+    }
+
+    @Override
+    public void update(Event event, Ride ride) {
+        ride.addEvent(event);
+    }
 }

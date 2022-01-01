@@ -2,11 +2,13 @@ package com.example.demoProjectWebService.application;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
 
-public class Driver extends NewUser {
-    private String drivingLicence, nationalID;
+public class Driver extends User {
+    private String drivingLicence;
+    private String nationalID;
+    private boolean available=true;
+    private String currentLocation="main_area";
     private boolean pending=true;
     private SystemData Data=DataArrays.getInstance();
     private Set<String> favoriteAreas = new HashSet<>();
@@ -16,20 +18,35 @@ public class Driver extends NewUser {
         super(username, email, phone, password);
         this.drivingLicence = drivingLicence;
         this.nationalID = nationalID;
-        this.pending = true;
     }
 
     public Driver() {
     }
 
-    public boolean register(NewUser user) {
+    public boolean register(User user) {
         if (((DataArrays)Data).getUsernames().contains(user.getUsername()))
             return false;
         Data.addDriver((Driver) user);
         return true;
     }
 
-    public NewUser login(String username, String password) {
+    public String getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setCurrentLocation(String currentLocation) {
+        this.currentLocation = currentLocation;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public User login(String username, String password) {
         ArrayList<Driver> drivers = ((DataArrays)Data).getDrivers();
         for (int i = 0; i < drivers.size(); i++) {
             if (drivers.get(i).getUsername().equals(username) && drivers.get(i).getPassword().equals(password)
@@ -91,9 +108,25 @@ public class Driver extends NewUser {
         return favoriteAreaRides;
     }
 
+    public boolean canTakeRide(Ride ride) {
+        return getFavoriteAreas().contains(ride.getSource()) && (getCurrentLocation().equalsIgnoreCase(ride.getSource()) || getCurrentLocation().equalsIgnoreCase("main_area")) && isAvailable();
+    }
+
+    public void startRide(int  Rideid) {
+        available = false;
+        ((DataArrays)Data).getRides().get(Rideid).eventManager.notify(new StatusEvent("Captain arrived to user location", this, ((DataArrays)Data).getRides().get(Rideid).getPassenger()), ((DataArrays)Data).getRides().get(Rideid));
+    }
+
+    public void finishRide(int  Rideid) {
+        currentLocation = ((DataArrays)Data).getRides().get(Rideid).getDestination();
+        available = true;
+        ((DataArrays)Data).getRides().get(Rideid).eventManager.notify(new StatusEvent("Captain arrived to user destination", this, ((DataArrays)Data).getRides().get(Rideid).getPassenger()), ((DataArrays)Data).getRides().get(Rideid));
+    }
+
     public void makeOffer(Ride r, double price) {
         Ride ride=Data.getRide(r);
-        User user = ride.getUser();
+        Passenger user = ride.getUser();
+        ride.eventManager.notify(new MakeOfferEvent("Captain Make offer " , this, price),ride);
         ride.add_Offer(new Offer(this,price));
         user.notify( "The driver offers your ride. check the price!", ride);
     }

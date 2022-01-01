@@ -1,12 +1,11 @@
 package com.example.demoProjectWebService.application;
-import java.util.ArrayList;
-import java.util.Set;
 
 public interface SystemData {
-    void addUser(User user);
+    void addPassenger(Passenger user);
     void addDriver(Driver driver);
     void addRide(Ride ride);
     void removeRide(Ride ride);
-    NewUser getUser(String username);
+    User getUser(String username);
     Ride getRide(Ride r);
+    void addDiscountArea(String area);
 }

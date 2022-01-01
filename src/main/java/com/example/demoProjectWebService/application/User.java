@@ -1,77 +1,92 @@
+
 package com.example.demoProjectWebService.application;
 import java.util.ArrayList;
-public class User extends NewUser {
-    public Ride offers = new Ride();
-    private ArrayList<Ride> ridesHistory = new ArrayList<Ride>();
-    private SystemData Data = DataArrays.getInstance();
+
+public abstract class User implements IServices {
+    private String username;
+    private String email;
+    private String phone;
+    private String password;
+    private ArrayList<String> notifications = new ArrayList<>();
+    private boolean suspended;
+    private double balance;
 
     public User(String username, String email, String phone, String password) {
-        super(username, email, phone, password);
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.suspended = false;
     }
 
     public User() {
     }
 
-    public boolean register(NewUser user) {
-        if (((DataArrays)Data).getUsernames().contains(user.getUsername()))
+    public abstract User login(String username, String Password);
+    public abstract boolean register(User user);
+    public abstract void notify(String message, Ride ride);
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setSuspended(boolean suspended) {
+        this.suspended = suspended;
+    }
+
+    public void addNotification(String message) {
+        notifications.add(message);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean isSuspended() {
+        return suspended;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public boolean withdraw(double amount) {
+        if (amount <= balance)
+        {
+            balance -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deposit(double amount) {
+        if (amount < 0)
             return false;
-        Data.addUser((User) user);
+        balance += amount;
         return true;
     }
 
-    public NewUser login(String username, String password) {
-        ArrayList<User> users = ((DataArrays)Data).getUsers();
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUsername().equals(username) && users.get(i).getPassword().equals(password) && !users.get(i).isSuspended()) {
-                return users.get(i);
-            }
-        }
-        return null;
-    }
-
-    public ArrayList<Offer> getOffers() {
-        return offers.getOffers();
-    }
-
-    public void requestRide(String source, String destination) {
-        Ride my_ride = new Ride(source, destination, this);
-        Data.addRide(my_ride);
-    }
-
-    public void rateDriver(String username,int stars) {
-        Driver d=(Driver) Data.getUser(username);
-        d.addUserRating(new Rating(this, stars));
-    }
-
-    public double checkDriverRating(String username) {
-        return ((Driver)Data.getUser(username)).getAvgRating();
-    }
-
-    public String chkOffer(int offerid) {
-        return ("The driver: " + offers.getOffers().get(offerid).getDriver().getUsername() + " Offers Your Ride with: " + offers.getOffers().get(offerid).getPrice() + " LE.");
-    }
-
-    public void acceptOffer(int Rideid, Boolean accept,int Offerid) {
-        Ride ride=((DataArrays)Data).getRides().get(Rideid);
-        Offer offer=ride.getOffers().get(Offerid);
-        offer.getDriver().notify( "User " + (accept ? "accepted" : "rejected") + " the offer", ride);
-        if (accept) {
-            ridesHistory.add(ride);
-            ride.setDriver(offer.getDriver());
-            ride.setPrice(offer.getPrice());
-            clearOffers();
-        }
-        else {
-            ride.getOffers().remove(offer);
-        }
-    }
-
-    public void clearOffers() {
-        offers = null;
-    }
-
-    public void notify(String message, Ride ride) {
-        this.addNotification(message);
-        offers = ride;
+    public ArrayList<String> getNotifications() {
+        return notifications;
     }
 }

@@ -24,4 +24,15 @@ public class AdminController {
     public ArrayList<Driver> listPendingDrivers() {
         return AppAdmin.listPendingDrivers();
     }
+
+    @PostMapping(path = "/addDiscountArea/{area}")
+    public void addDiscountArea(@PathVariable String area) {
+        AppAdmin.addDiscountArea(area);
+    }
+
+    @GetMapping(path = "/Show_ride_event/{Rideid}")
+    public ArrayList<String> showRideEvents(@PathVariable int Rideid) {
+        return AppAdmin.showRideEvents(Rideid);
+    }
+
 }

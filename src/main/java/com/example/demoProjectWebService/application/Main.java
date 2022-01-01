@@ -1,6 +1,8 @@
 
 package com.example.demoProjectWebService.application;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 
@@ -54,10 +56,10 @@ public class Main {
 
     public static void main(String[] args) {
         SystemData data=DataArrays.getInstance();
-        NewUser u=new User("asd","123","123","123");
-        NewUser d=new Driver("qwe","213","123","123","123","123");
-        NewUser d1=new Driver("zxc","213","123","123","123","123");
-        data.addUser((User) u);
+        User u=new Passenger("asd","123","123","123",new Date(2001, Calendar.JANUARY, 1));
+        User d=new Driver("qwe","213","123","123","123","123");
+        User d1=new Driver("zxc","213","123","123","123","123");
+        data.addPassenger((Passenger) u);
         data.addDriver((Driver)d);
         data.addDriver((Driver)d1);
         Admin a=Admin.getinstance();
@@ -65,7 +67,7 @@ public class Main {
         a.verifyDriver(d1.getUsername());
         ((Driver) d).addFavoriteArea("aaa");
         ((Driver) d1).addFavoriteArea("aaa");
-        ((User) u).requestRide("aaa","bbb");
+        ((Passenger) u).requestRide("aaa","bbb",2);
 
         boolean chk=true;
         String choice;
@@ -94,7 +96,7 @@ public class Main {
                         password = Enter_password(password);
 
                         // Register User & add in UsersData
-                        User new_user =new User(username,email,phone,password);
+                        Passenger new_user =new Passenger(username,email,phone,password,new Date(2001, Calendar.JANUARY, 1));
 
                         // Check for Username
                         unique = (new_user.register(new_user));
@@ -164,15 +166,15 @@ public class Main {
                 // as User
                 if(Integer.parseInt(choice)==1)
                 {
-                    User My_account = new User();
+                    Passenger My_account = new Passenger();
                     boolean correct=true;
                     while(correct)
                     {
                         // to login as User
                         username = Login_username(username);
                         password =Login_pass(password);
-                        My_account = new User();
-                        My_account=(User)My_account.login(username,password);
+                        My_account = new Passenger();
+                        My_account=(Passenger)My_account.login(username,password);
 
                         // check out Username and Password
                         if(My_account==null)
@@ -211,7 +213,7 @@ public class Main {
                             des = sc.nextLine();
 
                             // request ride and notify all drivers
-                            My_account.requestRide(src,des);
+                            My_account.requestRide(src,des,2);
                         }
                         // print notifications
                         else if(Integer.parseInt(choice)==2)
@@ -245,11 +247,11 @@ public class Main {
                                 }
                             }
                             My_account.clearOffers();
-                        }*/
+                        }
                         else
                         {
                             login=false;
-                        }
+                        }*/
                     }
                 }
                 // as Driver
@@ -396,9 +398,9 @@ public class Main {
                         }
                         else if(Integer.parseInt(choice)==3)
                         {
-                            ArrayList<User> users = ((DataArrays)data).getUsers();
+                            ArrayList<Passenger> users = ((DataArrays)data).getPassengers();
                             System.out.println("All Usernames and Suspend Status of Users in application ");
-                            for(User user:users)
+                            for(Passenger user:users)
                             {
                                 System.out.println("Username: "+user.getUsername()+" Suspend: "+(user.isSuspended()?"Yes":"No"));
                             }

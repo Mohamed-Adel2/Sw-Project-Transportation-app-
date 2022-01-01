@@ -3,29 +3,29 @@ package com.example.demoProjectWebService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.net.http.HttpResponse;
+
 import java.util.ArrayList;
 import java.util.Set;
 import com.example.demoProjectWebService.application.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 
 @RequestMapping("/driver")
 @RestController
 public class DriverController {
 
-    NewUser driver;
+    User driver;
     DriverController(){
         driver=new Driver();
     }
+
     @PostMapping("/register")
     public boolean register(@RequestBody Driver d) {
         return driver.register(d);
     }
 
     @GetMapping("/login/{username}/{password}")
-    public NewUser login(@PathVariable String username,@PathVariable String password) {
+    public User login(@PathVariable String username, @PathVariable String password) {
         driver=driver.login(username,password);
         return driver;
     }
@@ -40,14 +40,14 @@ public class DriverController {
         ((Driver)driver).setPending(pending);
     }
 
-    /*@PostMapping("/addrate")
-    public void addUserRating(@RequestBody Rating rating) {
-        ((Driver)driver).addUserRating(rating);
-    }*/
-
     @PostMapping("/addarea/{area}")
     public void addFavoriteArea(@PathVariable String area) {
         ((Driver)driver).addFavoriteArea(area);
+    }
+
+    @GetMapping("/Currentlocation")
+    public String getCurrentLocation() {
+        return ((Driver)driver).getCurrentLocation();
     }
 
     @GetMapping("/getratings")
@@ -79,9 +79,20 @@ public class DriverController {
     public Set<String> getFavoriteAreas() {
         return  ((Driver)driver).getFavoriteAreas();
     }
+
     @GetMapping("/getRides")
     public ArrayList<Ride> getRides() {
         return  ((Driver)driver).getRides();
+    }
+
+    @PutMapping(path="/startride/{Rideid}")
+    public void startRide(@PathVariable int  Rideid) {
+        ((Driver)driver).startRide(Rideid);
+    }
+
+    @PutMapping(path="/finishRide/{Rideid}")
+    public void finishRide(@PathVariable int  Rideid) {
+        ((Driver)driver).finishRide(Rideid);
     }
 
     @PostMapping("/makeOffer/{id}/{price}")
@@ -89,10 +100,10 @@ public class DriverController {
         ((Driver)driver).makeOffer(((Driver) driver).getRides().get(id), price);
     }
 
-   /* @PostMapping("/notify/{message}")
-    public void notify(@PathVariable String message,@RequestBody Ride ride) {
-        driver.notify(message,ride);
-    }*/
+    @GetMapping (path = "/Balance")
+    public double getBalance() {
+        return driver.getBalance();
+    }
 
     @GetMapping("/getnotification")
     public ArrayList<String> getNotifications(){

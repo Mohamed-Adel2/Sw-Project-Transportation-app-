@@ -6,10 +6,11 @@ import java.util.Set;
 
 public class DataArrays implements SystemData{
 
-    private static ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<Passenger> users = new ArrayList<>();
     private static ArrayList<Driver> drivers = new ArrayList<>();
     private static Set<String> systemUsersname = new HashSet<>();
     private static ArrayList<Ride> rides = new ArrayList<>();
+    private static ArrayList<String> discountAreas = new ArrayList<>();
     private static DataArrays Data;
 
     private DataArrays(){}
@@ -19,12 +20,12 @@ public class DataArrays implements SystemData{
         return Data;
     }
 
-    public void addUser(User user) {
+    public void addPassenger(Passenger user) {
         users.add(user);
         systemUsersname.add(user.getUsername());
     }
 
-    public ArrayList<User> getUsers() {
+    public ArrayList<Passenger> getPassengers() {
         return users;
     }
 
@@ -56,8 +57,8 @@ public class DataArrays implements SystemData{
         }
     }
 
-    public NewUser getUser(String username){
-        ArrayList<User> users = Data.getUsers();
+    public User getUser(String username){
+        ArrayList<Passenger> users = Data.getPassengers();
 
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getUsername().equalsIgnoreCase(username)) {
@@ -87,4 +88,13 @@ public class DataArrays implements SystemData{
     public ArrayList<Ride> getRides() {
         return rides;
     }
+
+    public void addDiscountArea(String area) {
+        discountAreas.add(area);
+    }
+
+    public ArrayList<String> getDiscountAreas() {
+        return discountAreas;
+    }
+
 }

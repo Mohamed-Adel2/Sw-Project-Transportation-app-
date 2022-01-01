@@ -1,18 +1,23 @@
 package com.example.demoProjectWebService.application;
 import java.util.ArrayList;
-import java.util.List;
+
 public class Ride {
 
     private String source;
     private String destination;
-    private User user;
+    private Passenger passenger;
     private Driver driver;
     private Double price;
+    private double priceAfterDiscount;
+    private int numberOfPassengers;
     private SystemData Data=DataArrays.getInstance();
     private ArrayList<Offer> offers = new ArrayList<>();
+    private ArrayList<Event> events = new ArrayList<>();
+    public EventManager eventManager;
     public int Rid;
     static int RideID=0;
     static int OfferID=0;
+
     public ArrayList<Offer> getOffers() {
         return offers;
     }
@@ -26,21 +31,25 @@ public class Ride {
         offers.add(o);
     }
 
-    public Ride(String source, String destination, User user) {
+    public Ride(String source, String destination, Passenger user, int numberOfPassengers) {
         this.source = source;
         this.destination = destination;
-        this.user = user;
-        price = null;
-        driver = null;
+        this.passenger = user;
+        this.price = null;
+        this.driver = null;
+        this.numberOfPassengers = numberOfPassengers;
+        this.eventManager = new EventManager();
+        this.eventManager.subscribe(Admin.getinstance());
 
-        ArrayList<Driver> drivers =((DataArrays)Data).getDrivers();
-        for (Driver driver : drivers) {
-            if (driver.getFavoriteAreas().contains(source)) {
-                driver.notify( "There is a ride that has a source area from your favorite areas!", this);
-            }
-        }
         Rid=RideID;
         RideID++;
+
+        ArrayList<Driver> drivers = ((DataArrays)Data).getDrivers();
+        for (Driver driver : drivers) {
+            if (driver.canTakeRide(this))
+                driver.notify( "There is a ride that has a source area from your favorite areas!", this);
+        }
+
     }
 
     public void setSource(String source) {
@@ -51,8 +60,16 @@ public class Ride {
         this.destination = destination;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
+    }
+
+    public void setUser(Passenger user) {
+        this.passenger = user;
+    }
+
+    public Passenger getPassenger() {
+        return passenger;
     }
 
     public void setPrice(Double price) {
@@ -71,12 +88,43 @@ public class Ride {
         return destination;
     }
 
-    public User getUser() {
-        return user;
+    public Passenger getUser() {
+        return passenger;
     }
 
     public Double getPrice() {
         return price;
+    }
+
+    public double getPriceAfterDiscount() {
+        return priceAfterDiscount;
+    }
+
+    public void calculatePriceAfterDiscount() {
+        Discount discount = new FirstRideDiscount(this);
+        discount.linkWith(new DestinationAreaDiscount(this)).
+                linkWith(new MultiplePassengersDiscount(this)).
+                linkWith(new PublicHolidayDiscount(this)).
+                linkWith(new BirthdateDiscount(this)).
+                linkWith(null);
+        priceAfterDiscount = discount.discount(price);
+    }
+
+    public int getNumberOfPassengers() {
+        return numberOfPassengers;
+    }
+
+    public void addEvent(Event event) {
+        events.add(event);
+    }
+
+    public ArrayList<Event> getEvents() {
+        return events;
+    }
+
+    public boolean makeTransaction() {
+        calculatePriceAfterDiscount();
+        return driver.deposit(getPrice()) && passenger.withdraw(getPriceAfterDiscount());
     }
 
     public Driver getDriver() {

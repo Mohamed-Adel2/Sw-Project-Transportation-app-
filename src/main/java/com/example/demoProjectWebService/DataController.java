@@ -1,10 +1,6 @@
 package com.example.demoProjectWebService;
 
 import com.example.demoProjectWebService.application.*;
-import com.example.demoProjectWebService.application.DataArrays;
-import com.example.demoProjectWebService.application.Driver;
-import com.example.demoProjectWebService.application.Ride;
-import com.example.demoProjectWebService.application.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,14 +11,14 @@ public class DataController {
     public DataArrays Data=DataArrays.getInstance();
 
     @PostMapping(path = "/adduser")
-    public void addUser(@RequestBody User user) {
-        Data.addUser(user);
+    public void addPassenger(@RequestBody Passenger user) {
+        Data.addPassenger(user);
     }
 
     @GetMapping(path = "/getusers")
-    public ArrayList<User> getUsers()
+    public ArrayList<Passenger> getPassengers()
     {
-        return Data.getUsers();
+        return Data.getPassengers();
     }
 
     @GetMapping(path = "/getusernames")
@@ -45,7 +41,6 @@ public class DataController {
         Data.addRide(ride);
     }
 
-
     @DeleteMapping(path = "/removeride")
     public void removeRide(@RequestBody Ride ride) {
         Data.removeRide(ride);
@@ -55,4 +50,10 @@ public class DataController {
     public ArrayList<Ride> getRides() {
         return Data.getRides();
     }
+
+    @GetMapping(path = "/getDiscountAreas")
+    public ArrayList<String> getDiscountAreas() {
+        return Data.getDiscountAreas();
+    }
+
 }
