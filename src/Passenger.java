@@ -59,9 +59,10 @@ public class Passenger extends User {
             ridesHistory.add(ride);
             ride.setDriver(offer.getDriver());
             ride.setPrice(offer.getPrice());
-            data.removeRide(ride);
+//            data.removeRide(ride);
             if (getRide().makeTransaction()) {
                 firstRide = false;
+                ride.eventManager.notify(new Event("User accepts the captain price", offer.getDriver(), this), ride);
                 return true;
             }
             return false;

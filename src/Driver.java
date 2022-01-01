@@ -94,18 +94,21 @@ public class Driver extends User {
         return ratings;
     }
 
-    public void startRide() {
+    public void startRide(Ride ride) {
         available = false;
+        ride.eventManager.notify(new Event("Captain arrived to user location", this, ride.getPassenger()), ride);
     }
 
     public void finishRide(Ride ride) {
         currentLocation = ride.getDestination();
         available = true;
+        ride.eventManager.notify(new Event("Captain arrived to user destination", this, ride.getPassenger()), ride);
     }
 
     public void makeOffer(Ride ride, double price) {
         Passenger user = ride.getPassenger();
         ride.addOffer(new Offer(this, price));
+        ride.eventManager.notify(new Event("Captain put a price to the ride", this, ride.getPassenger()), ride);
         user.notify(user, "The driver offers your ride. check the price!", ride);
     }
 

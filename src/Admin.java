@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Admin {
+public class Admin implements EventListener{
 
     private static Admin admin;
     private SystemData data = DataArrays.getInstance();
@@ -51,5 +51,10 @@ public class Admin {
 
     public ArrayList<Event> showRideEvents(Ride ride) {
         return ride.getEvents();
+    }
+
+    @Override
+    public void update(Event event, Ride ride) {
+        ride.addEvent(event);
     }
 }

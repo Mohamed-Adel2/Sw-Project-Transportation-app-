@@ -89,11 +89,23 @@ public class Main {
         ((Driver) d).makeOffer(ride, price);
         ((Passenger) u).acceptOffer(ride, true, new Offer((Driver) d, price));
 
+        ((Driver) d).startRide(ride);
+        ((Driver) d).finishRide(ride);
+
         System.out.println(ride.getPrice());
         System.out.println(ride.getPriceAfterDiscount());
 
         System.out.println(((Passenger) u).getBalance());
         System.out.println(((Driver) d).getBalance());
+
+
+        for (Ride r : data.getRides()) {
+            ArrayList<Event> events = admin.showRideEvents(r);
+            for (Event event : events) {
+                System.out.println(event);
+            }
+            System.out.println();
+        }
 
 
 

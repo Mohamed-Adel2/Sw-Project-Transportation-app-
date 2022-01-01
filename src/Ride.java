@@ -10,8 +10,9 @@ public class Ride {
     private double priceAfterDiscount;
     private int numberOfPassengers;
     private ArrayList<Offer> offers = new ArrayList<>();
-    private SystemData data = DataArrays.getInstance();
     private ArrayList<Event> events = new ArrayList<>();
+    public EventManager eventManager;
+    private SystemData data = DataArrays.getInstance();
 
     public Ride() {}
 
@@ -22,6 +23,8 @@ public class Ride {
         this.price = null;
         this.driver = null;
         this.numberOfPassengers = numberOfPassengers;
+        this.eventManager = new EventManager();
+        this.eventManager.subscribe(Admin.getInstance());
 
         ArrayList<Driver> drivers = data.getDrivers();
         for (Driver driver : drivers) {
