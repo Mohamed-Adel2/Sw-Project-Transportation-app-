@@ -8,8 +8,10 @@ public class MultiplePassengersDiscount extends Discount {
 
     @Override
     public double discount(double price) {
-        if (ride.getNumberOfPassengers() > 1)
+        if ( (ride.getNumberOfPassengers() > 1) || (ride.getDriver().getPassengers().size() > 1)) {
+            //System.out.println("sayed");
             price -= (ride.getPrice() * DISCOUNT_PERCENTAGE) / 100;
+        }
         return checkNext(price);
     }
 }

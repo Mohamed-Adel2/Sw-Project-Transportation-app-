@@ -31,6 +31,7 @@ public class Event {
         return passenger;
     }
 
+
     @Override
     public String toString() {
         return "Event: " + this.name + "\n"

@@ -4,6 +4,7 @@ public class Ride {
 
     private String source;
     private String destination;
+    private ArrayList<Passenger> passengers = new ArrayList<>();
     private Passenger passenger;
     private Driver driver;
     private Double price;
@@ -27,8 +28,9 @@ public class Ride {
         this.eventManager.subscribe(Admin.getInstance());
 
         ArrayList<Driver> drivers = data.getDrivers();
+        ArrayList<Ride> rides = data.getPendingRides();
         for (Driver driver : drivers) {
-            if (driver.canTakeRide(this))
+            if ( driver.canTakeRide(this))
                 driver.notify(driver, "There is a ride that has a source area from your favorite areas!", this);
         }
     }
@@ -47,6 +49,14 @@ public class Ride {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public ArrayList<Passenger> getPassengers() {
+        return passengers;
+    }
+
+    public void addPassenger(Passenger passenger) {
+        passengers.add(passenger);
     }
 
     public void setDriver(Driver driver) {
@@ -73,12 +83,12 @@ public class Ride {
         return priceAfterDiscount;
     }
 
-    public void calculatePriceAfterDiscount() {
-        Discount discount = new FirstRideDiscount(this);
-        discount.linkWith(new DestinationAreaDiscount(this)).
-                linkWith(new MultiplePassengersDiscount(this)).
-                linkWith(new PublicHolidayDiscount(this)).
-                linkWith(new BirthdateDiscount(this)).
+    public void calculatePriceAfterDiscount(Ride ride) {
+        Discount discount = new FirstRideDiscount(ride);
+        discount.linkWith(new DestinationAreaDiscount(ride)).
+                linkWith(new MultiplePassengersDiscount(ride)).
+                linkWith(new PublicHolidayDiscount(ride)).
+                linkWith(new BirthdateDiscount(ride)).
                 linkWith(null);
         priceAfterDiscount = discount.discount(price);
     }
@@ -107,8 +117,10 @@ public class Ride {
         return events;
     }
 
+
     public boolean makeTransaction() {
-        calculatePriceAfterDiscount();
-        return driver.deposit(getPrice()) && passenger.withdraw(getPriceAfterDiscount());
+        //calculatePriceAfterDiscount();
+        return driver.deposit(getPrice()) && passenger.canWithdraw(getPrice());
     }
+
 }

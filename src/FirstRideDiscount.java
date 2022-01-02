@@ -8,8 +8,10 @@ public class FirstRideDiscount extends Discount {
 
     @Override
     public double discount(double price) {
-        if (ride.getPassenger().isFirstRide())
+        if (ride.getPassenger().isFirstRide()) {
             price -= (ride.getPrice() * DISCOUNT_PERCENTAGE) / 100;
+            //System.out.println("sayed");
+        }
         return checkNext(price);
     }
 }

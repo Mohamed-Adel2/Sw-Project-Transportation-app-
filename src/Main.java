@@ -54,12 +54,16 @@ public class Main {
 
         SystemData data = DataArrays.getInstance();
         User u = new Passenger("asd", "123", "123", "123", new Date(2001, Calendar.JANUARY, 1));
-        User d = new Driver("qwe", "213", "123", "123", "123", "123");
-        User d1 = new Driver("zxc", "213", "123", "123", "123", "123");
+        User u1 = new Passenger("wwe", "123", "123", "123", new Date(2001, Calendar.JANUARY, 2));
+        User d = new Driver("qwe", "213", "123", "123", "123", "123" , 4);
+        User d1 = new Driver("zxc", "213", "123", "123", "123", "123" , 4);
+
         data.addPassenger((Passenger) u);
+        data.addPassenger((Passenger) u1);
         data.addDriver((Driver) d);
         data.addDriver((Driver) d1);
         Admin admin = Admin.getInstance();
+
         admin.verifyDriver((Driver) d);
         admin.verifyDriver((Driver) d1);
         admin.addDiscountArea("Maadi");
@@ -67,37 +71,64 @@ public class Main {
         ((Driver) d).addFavoriteArea("aaa");
         ((Driver) d).addFavoriteArea("Maadi");
 
-        ((Passenger) u).requestRide("Maadi", "Doki", 3);
-        ((Passenger) u).requestRide("Giza", "Maadi", 1);
+        ((Passenger) u).requestRide("Doki", "Maadi", 3);
+        ((Passenger) u1).requestRide("Doki", "Maadi", 1);
+
+
+
+        //((Passenger) u).requestRide("Giza", "Maadi", 1);
+        //((Passenger) u1).requestRide("Giza", "Maadi", 3);
 
         ((Passenger) u).deposit(500);
+        ((Passenger) u1).deposit(500);
 
         Ride ride = data.getRides().get(0);
+        Ride ride1 = data.getRides().get(1);
+//
         double price = 100;
+//
         ((Driver) d).makeOffer(ride, price);
+        ((Driver) d).makeOffer(ride1, price);
+
+        System.out.println(u.getNotifications());
+        System.out.println(u1.getNotifications());
+
+        System.out.println(((Driver) d).getCarCapacity());
+
         ((Passenger) u).acceptOffer(ride, true, new Offer((Driver) d, price));
 
-        System.out.println(ride.getPrice());
-        System.out.println(ride.getPriceAfterDiscount());
+        System.out.println(((Driver) d).getCarCapacity());
 
-        System.out.println(((Passenger) u).getBalance());
-        System.out.println(((Driver) d).getBalance());
-        System.out.println();
-        
-        price = 200;
-        ride = data.getRides().get(0);
-        ((Driver) d).makeOffer(ride, price);
-        ((Passenger) u).acceptOffer(ride, true, new Offer((Driver) d, price));
-
+        //((Driver) d).makeOffer(ride1, price);
+        ((Passenger) u1).acceptOffer(ride1, true, new Offer((Driver) d, price));
+//
+        System.out.println(((Driver) d).getCarCapacity());
+//
         ((Driver) d).startRide(ride);
         ((Driver) d).finishRide(ride);
-
         System.out.println(ride.getPrice());
+
         System.out.println(ride.getPriceAfterDiscount());
 
         System.out.println(((Passenger) u).getBalance());
+        System.out.println(((Passenger) u1).getBalance());
         System.out.println(((Driver) d).getBalance());
-
+        System.out.println();
+//
+//        price = 200;
+//        ride = data.getRides().get(0);
+//        ((Driver) d).makeOffer(ride, price);
+//        ((Passenger) u).acceptOffer(ride, true, new Offer((Driver) d, price));
+////
+//        ((Driver) d).startRide(ride);
+//        ((Driver) d).finishRide(ride);
+//
+//        System.out.println(ride.getPrice());
+//        System.out.println(ride.getPriceAfterDiscount());
+//
+//        System.out.println(((Passenger) u).getBalance());
+//        System.out.println(((Driver) d).getBalance());
+//
 
         for (Ride r : data.getRides()) {
             ArrayList<Event> events = admin.showRideEvents(r);
@@ -150,6 +181,7 @@ public class Main {
 ////                // as Driver
 ////                else if (Integer.parseInt(choice) == 2) {
 ////                    String licence, national_id;
+////                    int carCapacity;
 ////                    boolean unique = true;
 ////                    while (unique) {
 ////                        // Enter Data
@@ -162,9 +194,11 @@ public class Main {
 ////                        licence = sc.nextLine();
 ////                        System.out.println("National Id: ");
 ////                        national_id = sc.nextLine();
+////                        System.out.println("Your Car Capacity: ");
+////                        carCapacity = sc.nextLine();
 ////
 ////                        // Register Driver & add in DriversData
-////                        Driver new_driver = new Driver(username, email, phone, password, licence, national_id);
+////                        Driver new_driver = new Driver(username, email, phone, password, licence, national_id, carCapacity);
 ////
 ////                        // Check for Username
 ////                        unique = (new_driver.register(new_driver));
@@ -188,6 +222,7 @@ public class Main {
 //                System.out.println("Login Page\n Enter your choice as number 1/2/0\n 1-Login as User\n 2-Login as Driver\n 0-Exit");
 //                choice = sc.nextLine();
 //                String username = "", password = "";
+
 //                // as User
 //                if (Integer.parseInt(choice) == 1) {
 //                    Passenger My_account = new Passenger();

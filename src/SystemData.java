@@ -8,7 +8,9 @@ public interface SystemData {
     ArrayList<Driver> getDrivers();
     Set<String> getUsernames();
     void addRide(Ride ride);
+    void addPendingRide(Ride ride);
     ArrayList<Ride> getRides();
+    ArrayList<Ride> getPendingRides();
     void removeRide(Ride ride);
     void addDiscountArea(String area);
     ArrayList<String> getDiscountAreas();

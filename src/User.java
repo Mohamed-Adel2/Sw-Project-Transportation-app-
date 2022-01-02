@@ -76,6 +76,10 @@ abstract class User implements ILogin, IRegister, INotifier {
         return account.withdraw(amount);
     }
 
+    public boolean canWithdraw(double amount) {
+        return account.withdraw(amount);
+    }
+
     public boolean deposit(double amount) {
         return account.deposit(amount);
     }
@@ -98,4 +102,5 @@ abstract class User implements ILogin, IRegister, INotifier {
     public void notify(User user, String message, Ride ride) {
         iNotifier.notify(user, message, ride);
     }
+
 }

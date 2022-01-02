@@ -6,6 +6,16 @@ public class Passenger extends User {
     private Date birthdate = new Date();
     private Ride ride = new Ride();
     private boolean firstRide;
+    private double price;
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     private ArrayList<Ride> ridesHistory = new ArrayList<>();
 
     public Passenger() {}
@@ -39,6 +49,7 @@ public class Passenger extends User {
     public void requestRide(String source, String destination, int numberOfPassengers) {
         Ride myRide = new Ride(source, destination, this, numberOfPassengers);
         data.addRide(myRide);
+        data.addPendingRide(myRide);
     }
 
     public void rateDriver(Driver driver, int stars) {
@@ -55,20 +66,24 @@ public class Passenger extends User {
 
     public boolean acceptOffer(Ride ride, Boolean accept, Offer offer) {
         offer.getDriver().notify(offer.getDriver(), "User " + (accept ? "accepted" : "rejected") + " the offer", ride);
+        ride.setDriver(offer.getDriver());
+        ride.setPrice(offer.getPrice());
         if (accept) {
+            offer.getDriver().setCarCapacity(offer.getDriver().getCarCapacity() - ride.getNumberOfPassengers());
             ridesHistory.add(ride);
-            ride.setDriver(offer.getDriver());
-            ride.setPrice(offer.getPrice());
-//            data.removeRide(ride);
-            if (getRide().makeTransaction()) {
-                firstRide = false;
-                ride.eventManager.notify(new Event("User accepts the captain price", offer.getDriver(), this), ride);
-                return true;
-            }
-            return false;
+            data.removeRide(ride);
+//          firstRide = false;
+            ride.eventManager.notify(new Event("User accepts the captain price", offer.getDriver(), this), ride);
+            ride.getDriver().setPassenger(ride.getPassenger());
+            this.ride=ride;
+            ride.addPassenger(this);
+            return true;
         }
-        return true;
+        ride.setDriver(null);
+        ride.setPrice(null);
+        return false;
     }
+
 
     @Override
     public boolean register(User user) {

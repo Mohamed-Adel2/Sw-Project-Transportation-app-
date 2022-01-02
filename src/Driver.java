@@ -6,21 +6,28 @@ public class Driver extends User {
     private String drivingLicence;
     private String nationalID;
     private String currentLocation;
+    private int carCapacity;
     private boolean pending;
     private boolean available;
+    private ArrayList<Passenger> passengers = new ArrayList<>();
     private Set<String> favoriteAreas = new HashSet<>();
     private ArrayList<Rating> ratings = new ArrayList<>();
 
     public Driver() {}
 
-    public Driver(String username, String email, String phone, String password, String drivingLicence, String nationalID) {
+    public Driver(String username, String email, String phone, String password, String drivingLicence, String nationalID , int carCapacity) {
         super(username, email, phone, password);
         this.drivingLicence = drivingLicence;
         this.nationalID = nationalID;
+        this.carCapacity = carCapacity;
         this.pending = true;
         this.available = true;
         this.currentLocation = "main_area";
     }
+
+    public void setPassenger(Passenger passenger){passengers.add(passenger);}
+
+    public ArrayList<Passenger> getPassengers(){return passengers;}
 
     public void setDrivingLicence(String drivingLicence) {
         this.drivingLicence = drivingLicence;
@@ -66,6 +73,14 @@ public class Driver extends User {
         return favoriteAreas;
     }
 
+    public int getCarCapacity() {
+        return carCapacity;
+    }
+
+    public void setCarCapacity(int carCapacity) {
+        this.carCapacity = carCapacity;
+    }
+
     public ArrayList<Ride> getRides() {
         ArrayList<Ride> rides = data.getRides();
         ArrayList<Ride> favoriteAreaRides = new ArrayList<>();
@@ -78,7 +93,7 @@ public class Driver extends User {
     }
 
     public boolean canTakeRide(Ride ride) {
-        return getFavoriteAreas().contains(ride.getSource()) && (getCurrentLocation().equalsIgnoreCase(ride.getSource()) || getCurrentLocation().equalsIgnoreCase("main_area")) && isAvailable();
+        return getFavoriteAreas().contains(ride.getSource()) && (getCurrentLocation().equalsIgnoreCase(ride.getSource()) || getCurrentLocation().equalsIgnoreCase("main_area")) && isAvailable() && getCarCapacity() >= ride.getNumberOfPassengers();
     }
 
     public void addUserRating(Rating rating) {
@@ -94,21 +109,34 @@ public class Driver extends User {
         return ratings;
     }
 
+
     public void startRide(Ride ride) {
+        for(int i=0;i<passengers.size();i++)
+        {
+            ride.calculatePriceAfterDiscount(passengers.get(i).getRide());
+            passengers.get(i).withdraw(ride.getPriceAfterDiscount());
+            this.deposit(ride.getPrice());
+            ride.eventManager.notify(new Event("Captain arrived to user location", this, passengers.get(i)), ride);
+        }
         available = false;
-        ride.eventManager.notify(new Event("Captain arrived to user location", this, ride.getPassenger()), ride);
     }
 
     public void finishRide(Ride ride) {
         currentLocation = ride.getDestination();
         available = true;
-        ride.eventManager.notify(new Event("Captain arrived to user destination", this, ride.getPassenger()), ride);
+        for(int i=0;i<passengers.size();i++)
+        {
+            ride.eventManager.notify(new Event("Captain arrived to user destination", this, passengers.get(i)), ride);
+        }
+
     }
 
     public void makeOffer(Ride ride, double price) {
         Passenger user = ride.getPassenger();
+        //ride.setDriver(this);
+        //ride.setPrice(price);
         ride.addOffer(new Offer(this, price));
-        ride.eventManager.notify(new Event("Captain put a price to the ride", this, ride.getPassenger()), ride);
+        ride.eventManager.notify(new Event("Captain put a price to the ride with : " + price +" LE " ,this, ride.getPassenger()), ride);
         user.notify(user, "The driver offers your ride. check the price!", ride);
     }
 

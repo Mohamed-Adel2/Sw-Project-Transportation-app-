@@ -8,6 +8,7 @@ public class DataArrays implements SystemData {
     private static ArrayList<Driver> drivers = new ArrayList<>();
     private static Set<String> systemUsernames = new HashSet<>();
     private static ArrayList<Ride> rides = new ArrayList<>();
+    private static ArrayList<Ride> pendingRides = new ArrayList<>();
     private static ArrayList<String> discountAreas = new ArrayList<>();
     private static DataArrays data;
 
@@ -53,13 +54,23 @@ public class DataArrays implements SystemData {
     }
 
     @Override
+    public void addPendingRide(Ride ride) {
+        pendingRides.add(ride);
+    }
+
+    @Override
     public void removeRide(Ride ride) {
-        rides.remove(ride);
+        pendingRides.remove(ride);
     }
 
     @Override
     public ArrayList<Ride> getRides() {
         return rides;
+    }
+
+    @Override
+    public ArrayList<Ride> getPendingRides() {
+        return pendingRides;
     }
 
     @Override
