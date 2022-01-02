@@ -1,4 +1,6 @@
-package com.example.demoProjectWebService.application;
+package com.example.demoProjectWebService.application.Service;
+import com.example.demoProjectWebService.application.Persons.*;
+
 
 public class CalculateAvgRating {
 

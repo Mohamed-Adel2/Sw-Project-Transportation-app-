@@ -1,9 +1,8 @@
-package com.example.demoProjectWebService;
+package com.example.demoProjectWebService.Controller;
 
 import java.util.ArrayList;
-import java.util.Date;
-
-import com.example.demoProjectWebService.application.*;
+import com.example.demoProjectWebService.Core.*;
+import com.example.demoProjectWebService.application.Persons.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

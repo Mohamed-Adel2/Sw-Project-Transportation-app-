@@ -1,5 +1,8 @@
-package com.example.demoProjectWebService.application;
+package com.example.demoProjectWebService.application.Persons;
 import java.util.ArrayList;
+import com.example.demoProjectWebService.Data.*;
+import com.example.demoProjectWebService.Core.*;
+import com.example.demoProjectWebService.application.Service.*;
 
 public class Admin implements EventListener{
 

@@ -1,4 +1,4 @@
-package com.example.demoProjectWebService.application;
+package com.example.demoProjectWebService.Core;
 
 import java.sql.Time;
 import java.time.LocalTime;

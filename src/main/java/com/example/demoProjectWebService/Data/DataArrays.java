@@ -1,10 +1,12 @@
-package com.example.demoProjectWebService.application;
+package com.example.demoProjectWebService.Data;
 
+import com.example.demoProjectWebService.Core.*;
+import com.example.demoProjectWebService.application.Persons.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DataArrays implements SystemData{
+public class DataArrays implements SystemData {
 
     private static ArrayList<Passenger> users = new ArrayList<>();
     private static ArrayList<Driver> drivers = new ArrayList<>();

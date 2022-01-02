@@ -1,10 +1,10 @@
-package com.example.demoProjectWebService.application;
-
+package com.example.demoProjectWebService.application.Service;
+import com.example.demoProjectWebService.Core.*;
 public class MultiplePassengersDiscount extends Discount {
 
     final int DISCOUNT_PERCENTAGE = 5;
 
-    MultiplePassengersDiscount(Ride ride) {
+    public MultiplePassengersDiscount(Ride ride) {
         super(ride);
     }
 

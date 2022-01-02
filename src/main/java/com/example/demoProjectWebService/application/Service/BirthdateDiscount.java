@@ -1,5 +1,6 @@
-package com.example.demoProjectWebService.application;
-
+package com.example.demoProjectWebService.application.Service;
+import com.example.demoProjectWebService.Core.*;
+import com.example.demoProjectWebService.application.Persons.*;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -7,7 +8,7 @@ public class BirthdateDiscount extends Discount {
 
     final int DISCOUNT_PERCENTAGE = 10;
 
-    BirthdateDiscount(Ride ride) {
+    public BirthdateDiscount(Ride ride) {
         super(ride);
     }
 

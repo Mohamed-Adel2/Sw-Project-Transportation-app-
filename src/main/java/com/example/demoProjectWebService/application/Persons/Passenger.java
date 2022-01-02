@@ -1,6 +1,9 @@
-package com.example.demoProjectWebService.application;
+package com.example.demoProjectWebService.application.Persons;
 import java.util.ArrayList;
 import java.util.Date;
+import com.example.demoProjectWebService.Data.*;
+import com.example.demoProjectWebService.Core.*;
+import com.example.demoProjectWebService.application.Service.*;
 
 public class Passenger extends User {
 

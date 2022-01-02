@@ -1,11 +1,13 @@
-package com.example.demoProjectWebService.application;
+package com.example.demoProjectWebService.application.Service;
+import com.example.demoProjectWebService.Data.*;
+import com.example.demoProjectWebService.Core.*;
 
 public class DestinationAreaDiscount extends Discount {
 
     private SystemData data = DataArrays.getInstance();
     final int DISCOUNT_PERCENTAGE = 10;
 
-    DestinationAreaDiscount(Ride ride) {
+    public DestinationAreaDiscount(Ride ride) {
         super(ride);
     }
 

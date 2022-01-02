@@ -1,4 +1,5 @@
-package com.example.demoProjectWebService.application;
+package com.example.demoProjectWebService.Core;
+import com.example.demoProjectWebService.application.Persons.*;
 
 public class Rating {
 

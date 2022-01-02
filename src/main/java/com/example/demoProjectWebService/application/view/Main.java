@@ -1,9 +1,12 @@
 
-package com.example.demoProjectWebService.application;
+package com.example.demoProjectWebService.application.view;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
+import com.example.demoProjectWebService.Data.*;
+import com.example.demoProjectWebService.Core.*;
+import com.example.demoProjectWebService.application.Persons.*;
 
 
 public class Main {

@@ -1,12 +1,13 @@
-package com.example.demoProjectWebService;
+package com.example.demoProjectWebService.Controller;
 
 
+import com.example.demoProjectWebService.Core.*;
+import com.example.demoProjectWebService.application.Persons.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Set;
-import com.example.demoProjectWebService.application.*;
 import org.springframework.web.bind.annotation.*;
 
 

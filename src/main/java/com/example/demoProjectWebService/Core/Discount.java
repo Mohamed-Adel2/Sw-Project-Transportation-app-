@@ -1,11 +1,12 @@
-package com.example.demoProjectWebService.application;
+package com.example.demoProjectWebService.Core;
+
 
 public abstract class Discount {
 
     protected Ride ride;
     private Discount next;
 
-    Discount(Ride ride) {
+    public Discount(Ride ride) {
         this.ride = ride;
     }
 

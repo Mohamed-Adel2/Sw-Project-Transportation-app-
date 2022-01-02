@@ -1,7 +1,7 @@
-package com.example.demoProjectWebService;
+package com.example.demoProjectWebService.Controller;
 
-import com.example.demoProjectWebService.application.*;
 import org.springframework.web.bind.annotation.*;
+import com.example.demoProjectWebService.application.Persons.*;
 
 import java.util.ArrayList;
 

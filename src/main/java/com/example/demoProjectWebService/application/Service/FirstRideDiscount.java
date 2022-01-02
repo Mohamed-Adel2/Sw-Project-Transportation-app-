@@ -1,10 +1,12 @@
-package com.example.demoProjectWebService.application;
+package com.example.demoProjectWebService.application.Service;
+
+import com.example.demoProjectWebService.Core.*;
 
 public class FirstRideDiscount extends Discount {
 
     final int DISCOUNT_PERCENTAGE = 10;
 
-    FirstRideDiscount(Ride ride) {
+    public FirstRideDiscount(Ride ride) {
         super(ride);
     }
 
