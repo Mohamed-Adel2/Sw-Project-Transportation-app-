@@ -57,8 +57,8 @@ public class Main {
     public static void main(String[] args) {
         SystemData data=DataArrays.getInstance();
         User u=new Passenger("asd","123","123","123",new Date(2001, Calendar.JANUARY, 1));
-        User d=new Driver("qwe","213","123","123","123","123");
-        User d1=new Driver("zxc","213","123","123","123","123");
+        User d=new Driver("qwe","213","123","123","123","123",4);
+        User d1=new Driver("zxc","213","123","123","123","123",4);
         data.addPassenger((Passenger) u);
         data.addDriver((Driver)d);
         data.addDriver((Driver)d1);
@@ -133,7 +133,7 @@ public class Main {
                         national_id=sc.nextLine();
 
                         // Register Driver & add in DriversData
-                        Driver new_driver =new Driver(username,email,phone,password,licence,national_id);
+                        Driver new_driver =new Driver(username,email,phone,password,licence,national_id,4);
 
                         // Check for Username
                         unique = (new_driver.register(new_driver));

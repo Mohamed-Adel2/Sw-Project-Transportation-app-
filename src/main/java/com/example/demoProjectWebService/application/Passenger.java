@@ -5,10 +5,8 @@ import java.util.Date;
 public class Passenger extends User {
 
     public Ride ride = new Ride();
-    private boolean  firstRide = true;;
+    private boolean  firstRide = true;
     private Date birthdate = new Date();
-    private ArrayList<Ride> ridesHistory = new ArrayList<Ride>();
-    private SystemData Data = DataArrays.getInstance();
 
     public Passenger(String username, String email, String phone, String password, Date birthdate) {
         super(username, email, phone, password);
@@ -75,30 +73,28 @@ public class Passenger extends User {
         Offer offer=ride.getOffers().get(Offerid);
         offer.getDriver().notify( "User " + (accept ? "accepted" : "rejected") + " the offer", ride);
         if (accept) {
-            ridesHistory.add(ride);
+            offer.getDriver().setCarCapacity(offer.getDriver().getCarCapacity() - ride.getNumberOfPassengers());
             ride.setDriver(offer.getDriver());
             ride.setPrice(offer.getPrice());
             clearOffers();
-            if (ride.makeTransaction()) {
-                firstRide = false;
-                ride.eventManager.notify(new AcceptOfferEvent("User accepts the captain price", this), ride);
-            }
+            offer.getDriver().setPassenger(this);
+            ((DataArrays)Data).getRides().get(Rideid).eventManager.notify(new AcceptOfferEvent("User Accepts the captain price", this),ride);
         }
         else {
             ride.getOffers().remove(offer);
         }
     }
-    public ArrayList<Ride> getRidesHistory() {
-        return ridesHistory;
-    }
-
 
     public void clearOffers() {
-        ride = null;
+        ride.setOffers(null);
     }
 
     public void notify(String message, Ride ride) {
         this.addNotification(message);
         this.ride = ride;
+    }
+
+    public void setFirstRide(boolean firstRide) {
+        this.firstRide = firstRide;
     }
 }

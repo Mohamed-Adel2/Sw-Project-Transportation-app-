@@ -10,14 +10,16 @@ public class Driver extends User {
     private boolean available=true;
     private String currentLocation="main_area";
     private boolean pending=true;
-    private SystemData Data=DataArrays.getInstance();
+    private int carCapacity;
+    private ArrayList<Passenger> RidePassenger = new ArrayList<>();
     private Set<String> favoriteAreas = new HashSet<>();
     private ArrayList<Rating> ratings = new ArrayList<>();
 
-    public Driver(String username, String email, String phone, String password, String drivingLicence, String nationalID) {
+    public Driver(String username, String email, String phone, String password, String drivingLicence, String nationalID,int cap) {
         super(username, email, phone, password);
         this.drivingLicence = drivingLicence;
         this.nationalID = nationalID;
+        carCapacity=cap;
     }
 
     public Driver() {
@@ -29,6 +31,11 @@ public class Driver extends User {
         Data.addDriver((Driver) user);
         return true;
     }
+
+    public void setPassenger(Passenger passenger){
+        RidePassenger.add(passenger);}
+
+    public ArrayList<Passenger> getRidePassenger(){return RidePassenger;}
 
     public String getCurrentLocation() {
         return currentLocation;
@@ -102,25 +109,36 @@ public class Driver extends User {
         ArrayList<Ride> favoriteAreaRides = new ArrayList<>();
 
         for (Ride ride : rides) {
-            if (favoriteAreas.contains(ride.getSource()))
+            if (favoriteAreas.contains(ride.getSource()) && ride.status)
                 favoriteAreaRides.add(ride);
         }
         return favoriteAreaRides;
     }
 
     public boolean canTakeRide(Ride ride) {
-        return getFavoriteAreas().contains(ride.getSource()) && (getCurrentLocation().equalsIgnoreCase(ride.getSource()) || getCurrentLocation().equalsIgnoreCase("main_area")) && isAvailable();
+        return getFavoriteAreas().contains(ride.getSource()) && (getCurrentLocation().equalsIgnoreCase(ride.getSource()) || getCurrentLocation().equalsIgnoreCase("main_area")) && isAvailable() && getCarCapacity()>=ride.getNumberOfPassengers();
     }
 
-    public void startRide(int  Rideid) {
+    public void startRide() {
+        for(int i = 0; i< RidePassenger.size(); i++)
+        {
+            RidePassenger.get(i).getRide().calculatePriceAfterDiscount();
+            RidePassenger.get(i).withdraw(RidePassenger.get(i).getRide().getPriceAfterDiscount());
+            RidePassenger.get(i).setFirstRide(false);
+            this.deposit(RidePassenger.get(i).getRide().getPrice());
+            RidePassenger.get(i).getRide().eventManager.notify(new StatusEvent("Captain arrived to user location", this, RidePassenger.get(i)), RidePassenger.get(i).getRide());
+        }
         available = false;
-        ((DataArrays)Data).getRides().get(Rideid).eventManager.notify(new StatusEvent("Captain arrived to user location", this, ((DataArrays)Data).getRides().get(Rideid).getPassenger()), ((DataArrays)Data).getRides().get(Rideid));
     }
 
-    public void finishRide(int  Rideid) {
-        currentLocation = ((DataArrays)Data).getRides().get(Rideid).getDestination();
+    public void finishRide() {
+        currentLocation = RidePassenger.get(0).getRide().getDestination();
         available = true;
-        ((DataArrays)Data).getRides().get(Rideid).eventManager.notify(new StatusEvent("Captain arrived to user destination", this, ((DataArrays)Data).getRides().get(Rideid).getPassenger()), ((DataArrays)Data).getRides().get(Rideid));
+        for(int i = 0; i< RidePassenger.size(); i++)
+        {
+            RidePassenger.get(i).getRide().eventManager.notify(new StatusEvent("Captain arrived to user destination", this, RidePassenger.get(i)), RidePassenger.get(i).getRide());
+            RidePassenger.get(i).getRide().status=false;
+        }
     }
 
     public void makeOffer(Ride r, double price) {
@@ -129,6 +147,14 @@ public class Driver extends User {
         ride.eventManager.notify(new MakeOfferEvent("Captain Make offer " , this, price),ride);
         ride.add_Offer(new Offer(this,price));
         user.notify( "The driver offers your ride. check the price!", ride);
+    }
+
+    public int getCarCapacity() {
+        return carCapacity;
+    }
+
+    public void setCarCapacity(int carCapacity) {
+        this.carCapacity = carCapacity;
     }
 
     public void notify( String message, Ride ride) {

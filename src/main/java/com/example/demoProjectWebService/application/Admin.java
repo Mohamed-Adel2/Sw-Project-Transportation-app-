@@ -64,7 +64,6 @@ public class Admin implements EventListener{
         }
         return events;
     }
-
     @Override
     public void update(Event event, Ride ride) {
         ride.addEvent(event);

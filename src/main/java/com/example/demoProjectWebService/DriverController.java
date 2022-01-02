@@ -85,14 +85,14 @@ public class DriverController {
         return  ((Driver)driver).getRides();
     }
 
-    @PutMapping(path="/startride/{Rideid}")
-    public void startRide(@PathVariable int  Rideid) {
-        ((Driver)driver).startRide(Rideid);
+    @PutMapping(path="/startride")
+    public void startRide() {
+        ((Driver)driver).startRide();
     }
 
-    @PutMapping(path="/finishRide/{Rideid}")
-    public void finishRide(@PathVariable int  Rideid) {
-        ((Driver)driver).finishRide(Rideid);
+    @PutMapping(path="/finishRide")
+    public void finishRide() {
+        ((Driver)driver).finishRide();
     }
 
     @PostMapping("/makeOffer/{id}/{price}")

@@ -10,6 +10,7 @@ public abstract class User implements IServices {
     private ArrayList<String> notifications = new ArrayList<>();
     private boolean suspended;
     private double balance;
+    protected SystemData Data = DataArrays.getInstance();
 
     public User(String username, String email, String phone, String password) {
         this.username = username;
@@ -88,5 +89,9 @@ public abstract class User implements IServices {
 
     public ArrayList<String> getNotifications() {
         return notifications;
+    }
+
+    public boolean canWithdraw(double amount) {
+        return withdraw(amount);
     }
 }

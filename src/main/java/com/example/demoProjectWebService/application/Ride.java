@@ -17,6 +17,7 @@ public class Ride {
     public int Rid;
     static int RideID=0;
     static int OfferID=0;
+    public boolean status=true;
 
     public ArrayList<Offer> getOffers() {
         return offers;
@@ -62,10 +63,6 @@ public class Ride {
 
     public void setPassenger(Passenger passenger) {
         this.passenger = passenger;
-    }
-
-    public void setUser(Passenger user) {
-        this.passenger = user;
     }
 
     public Passenger getPassenger() {
@@ -123,11 +120,15 @@ public class Ride {
     }
 
     public boolean makeTransaction() {
-        calculatePriceAfterDiscount();
-        return driver.deposit(getPrice()) && passenger.withdraw(getPriceAfterDiscount());
+        //calculatePriceAfterDiscount();
+        return driver.deposit(getPrice()) && passenger.canWithdraw(getPrice());
     }
 
     public Driver getDriver() {
         return driver;
+    }
+
+    public void setOffers(ArrayList<Offer> offers) {
+        this.offers = offers;
     }
 }
