@@ -35,14 +35,15 @@ public class Admin implements EventListener{
         return false;
     }
 
-    public void verifyDriver(String username) {
+    public boolean verifyDriver(String username) {
         ArrayList<Driver> Drivers = ((DataArrays)Data).getDrivers();
         for (int i = 0; i < Drivers.size(); i++) {
             if (Drivers.get(i).getUsername().equalsIgnoreCase(username)) {
                 ((DataArrays)Data).getDrivers().get(i).setPending(false);
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     public ArrayList<Driver> listPendingDrivers() {
@@ -55,8 +56,8 @@ public class Admin implements EventListener{
         return pendingDrivers;
     }
 
-    public void addDiscountArea(String area) {
-        Data.addDiscountArea(area);
+    public boolean addDiscountArea(String area) {
+        return Data.addDiscountArea(area);
     }
 
     public ArrayList<String> showRideEvents(int Rideid) {

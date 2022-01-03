@@ -52,10 +52,11 @@ public class Passenger extends User {
         return ride.getOffers();
     }
 
-    public void requestRide(String source, String destination,int numberOfPassengers) {
+    public String requestRide(String source, String destination,int numberOfPassengers) {
         Ride my_ride = new Ride(source, destination, this,numberOfPassengers);
         ride=my_ride;
         Data.addRide(my_ride);
+        return "Ride Requested successfully!";
     }
 
     public void rateDriver(String username,int stars) {
@@ -68,10 +69,12 @@ public class Passenger extends User {
     }
 
     public String chkOffer(int offerid) {
-        return ("The driver: " + ride.getOffers().get(offerid).getDriver().getUsername() + " Offers Your Ride with: " + ride.getOffers().get(offerid).getPrice() + " LE.");
+        Ride r=new Ride(ride.getOffers().get(offerid).getPrice(),ride);
+        r.calculatePriceAfterDiscount();
+        return ("The driver: " + ride.getOffers().get(offerid).getDriver().getUsername() + " Offers Your Ride with: " + ride.getOffers().get(offerid).getPrice()+"LE.  Price After Discount: "+ r.getPriceAfterDiscount() + " LE.");
     }
 
-    public void acceptOffer(int Rideid, Boolean accept,int Offerid) {
+    public boolean acceptOffer(int Rideid, Boolean accept,int Offerid) {
         Ride ride=((DataArrays)Data).getRides().get(Rideid);
         Offer offer=ride.getOffers().get(Offerid);
         offer.getDriver().notify( "User " + (accept ? "accepted" : "rejected") + " the offer", ride);
@@ -82,10 +85,12 @@ public class Passenger extends User {
             clearOffers();
             offer.getDriver().setPassenger(this);
             ((DataArrays)Data).getRides().get(Rideid).eventManager.notify(new AcceptOfferEvent("User Accepts the captain price", this),ride);
+            return true;
         }
         else {
             ride.getOffers().remove(offer);
         }
+        return false;
     }
 
     public void clearOffers() {

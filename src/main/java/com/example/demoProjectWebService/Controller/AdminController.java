@@ -16,8 +16,8 @@ public class AdminController {
     }
 
     @PutMapping(path = "/verify/{username}")
-    public void verifyDriver(@PathVariable String username) {
-        AppAdmin.verifyDriver(username);
+    public boolean verifyDriver(@PathVariable String username) {
+        return AppAdmin.verifyDriver(username);
     }
 
     @GetMapping(path = "/getpending")
@@ -26,8 +26,8 @@ public class AdminController {
     }
 
     @PostMapping(path = "/addDiscountArea/{area}")
-    public void addDiscountArea(@PathVariable String area) {
-        AppAdmin.addDiscountArea(area);
+    public boolean addDiscountArea(@PathVariable String area) {
+        return AppAdmin.addDiscountArea(area);
     }
 
     @GetMapping(path = "/Show_ride_event/{Rideid}")

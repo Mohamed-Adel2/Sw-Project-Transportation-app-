@@ -8,5 +8,5 @@ public interface SystemData {
     void removeRide(Ride ride);
     User getUser(String username);
     Ride getRide(Ride r);
-    void addDiscountArea(String area);
+    boolean addDiscountArea(String area);
 }

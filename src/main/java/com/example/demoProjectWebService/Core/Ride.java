@@ -28,6 +28,16 @@ public class Ride {
 
     public Ride() {
     }
+
+    public Ride(Double price,Ride r){
+        this.price = price;
+        this.source = r.getSource();
+        this.destination = r.getDestination();
+        this.passenger = r.getPassenger();
+        this.driver = null;
+        this.numberOfPassengers = r.getNumberOfPassengers();
+    }
+
     public void add_Offer(Offer o)
     {
         o.ID=OfferID;

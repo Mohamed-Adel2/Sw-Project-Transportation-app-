@@ -42,8 +42,8 @@ public class DriverController {
     }
 
     @PostMapping("/addarea/{area}")
-    public void addFavoriteArea(@PathVariable String area) {
-        ((Driver)driver).addFavoriteArea(area);
+    public boolean addFavoriteArea(@PathVariable String area) {
+        return ((Driver)driver).addFavoriteArea(area);
     }
 
     @GetMapping("/Currentlocation")
@@ -87,18 +87,18 @@ public class DriverController {
     }
 
     @PutMapping(path="/startride")
-    public void startRide() {
-        ((Driver)driver).startRide();
+    public String startRide() {
+        return ((Driver)driver).startRide();
     }
 
     @PutMapping(path="/finishRide")
-    public void finishRide() {
-        ((Driver)driver).finishRide();
+    public String finishRide() {
+        return ((Driver)driver).finishRide();
     }
 
     @PostMapping("/makeOffer/{id}/{price}")
-    public void makeOffer(@PathVariable int id,@PathVariable double price) {
-        ((Driver)driver).makeOffer(((Driver) driver).getRides().get(id), price);
+    public String makeOffer(@PathVariable int id,@PathVariable double price) {
+       return ((Driver)driver).makeOffer(((Driver) driver).getRides().get(id), price);
     }
 
     @GetMapping (path = "/Balance")

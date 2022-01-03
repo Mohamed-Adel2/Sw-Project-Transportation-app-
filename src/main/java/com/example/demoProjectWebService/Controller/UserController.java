@@ -30,8 +30,8 @@ public class UserController {
     }
 
     @PostMapping (path = "/requestride/{source}/{destination}/{numberOfPassengers}")
-    public void requestRide(@PathVariable String source,@PathVariable String destination,@PathVariable int numberOfPassengers ) {
-        ((Passenger)AppUser).requestRide(source,destination,numberOfPassengers);
+    public String requestRide(@PathVariable String source,@PathVariable String destination,@PathVariable int numberOfPassengers ) {
+        return ((Passenger)AppUser).requestRide(source,destination,numberOfPassengers);
     }
 
     @PostMapping (path = "/ratedriver/{username}/{stars}")
@@ -55,8 +55,8 @@ public class UserController {
     }
 
     @PutMapping (path = "/acceptride/{rideid}/{accept}/{offerid}")
-    public void acceptOffer(@PathVariable int rideid,@PathVariable Boolean accept,@PathVariable int offerid){
-        ((Passenger)AppUser).acceptOffer(rideid,accept,offerid);
+    public Boolean acceptOffer(@PathVariable int rideid,@PathVariable Boolean accept,@PathVariable int offerid){
+        return ((Passenger)AppUser).acceptOffer(rideid,accept,offerid);
     }
 
     @PutMapping (path = "/clearoffers")

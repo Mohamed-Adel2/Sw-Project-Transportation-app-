@@ -79,8 +79,8 @@ public class Driver extends User {
         ratings.add(rating);
     }
 
-    public void addFavoriteArea(String area) {
-        favoriteAreas.add(area);
+    public boolean addFavoriteArea(String area) {
+        return favoriteAreas.add(area);
     }
 
     public ArrayList<Rating> listUserRatings() {
@@ -122,7 +122,7 @@ public class Driver extends User {
         return getFavoriteAreas().contains(ride.getSource()) && (getCurrentLocation().equalsIgnoreCase(ride.getSource()) || getCurrentLocation().equalsIgnoreCase("main_area")) && isAvailable() && getCarCapacity()>=ride.getNumberOfPassengers();
     }
 
-    public void startRide() {
+    public String startRide() {
         for(int i = 0; i< RidePassenger.size(); i++)
         {
             RidePassenger.get(i).getRide().calculatePriceAfterDiscount();
@@ -132,9 +132,10 @@ public class Driver extends User {
             RidePassenger.get(i).getRide().eventManager.notify(new StatusEvent("Captain arrived to user location", this, RidePassenger.get(i)), RidePassenger.get(i).getRide());
         }
         available = false;
+        return "ride started. wish you a comfort ride.!";
     }
 
-    public void finishRide() {
+    public String finishRide() {
         currentLocation = RidePassenger.get(0).getRide().getDestination();
         available = true;
         for(int i = 0; i< RidePassenger.size(); i++)
@@ -142,14 +143,16 @@ public class Driver extends User {
             RidePassenger.get(i).getRide().eventManager.notify(new StatusEvent("Captain arrived to user destination", this, RidePassenger.get(i)), RidePassenger.get(i).getRide());
             RidePassenger.get(i).getRide().status=false;
         }
+        return "ride finished. 7amdla 3la slamtk <3 .!";
     }
 
-    public void makeOffer(Ride r, double price) {
+    public String makeOffer(Ride r, double price) {
         Ride ride=Data.getRide(r);
         Passenger user = ride.getUser();
         ride.eventManager.notify(new MakeOfferEvent("Captain Make offer " , this, price),ride);
         ride.add_Offer(new Offer(this,price));
         user.notify( "The driver offers your ride. check the price!", ride);
+        return "Offer sent successfully!";
     }
 
     public int getCarCapacity() {

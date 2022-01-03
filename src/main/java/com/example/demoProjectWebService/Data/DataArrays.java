@@ -91,8 +91,8 @@ public class DataArrays implements SystemData {
         return rides;
     }
 
-    public void addDiscountArea(String area) {
-        discountAreas.add(area);
+    public boolean addDiscountArea(String area) {
+        return discountAreas.add(area);
     }
 
     public ArrayList<String> getDiscountAreas() {
